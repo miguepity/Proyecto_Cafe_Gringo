@@ -6,7 +6,6 @@
 
 <script>
 import Empleado from './components/Empleado.vue'
-import VistaEmpleado from './components/VistaEmpleado.vue'
 
 export default {
   name: 'app',
