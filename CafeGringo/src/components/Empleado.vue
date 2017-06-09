@@ -55,23 +55,23 @@ export default {
       Pass:'',
       date:[],
       hrIn:[],
-      hrOut:[]
+      hrOut:[],
     }
   },
   methods:{
     clickLogin: function(){
-      // var now = new Date();
-      // var day = ("0" + now.getDate()).slice(-2);
-      // var month = ("0" + (now.getMonth() + 1)).slice(-2);
-      // var today = (day)+"-"+(month)+"-"+now.getFullYear();
-      // var time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-
       if($('.username').val()!=="" && $('.pass').val()!==""){
         $('.modal').modal('open');
         $('.username').val("");
         $('.pass').val("");
       }else{
-        alert("INGRESE USUARIO Y COTRASEÑA");
+        sweetAlert({
+          title: "Ohh No!...",
+          text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
+          type:  "error",
+        });
+        $('.username').val("");
+        $('.pass').val("");
       }
     },
     agree:function(){
@@ -154,4 +154,6 @@ form label{
   color: black;
   font-size: 20px;
 }
+
+
 </style>
