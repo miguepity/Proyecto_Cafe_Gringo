@@ -34,7 +34,7 @@ exports.getEmpleado = {
 
 exports.updateEmpleado = {
   handler: function(request, reply){
-    empleado.update({_id: request.params.id},
+    empleado.update({username: request.params.username},
       {$set:
         {
           Nombre: request.payload.Nombre,
@@ -57,7 +57,7 @@ exports.updateEmpleado = {
 
 exports.deleteEmpleado = {
   handler: function(request, reply){
-    empleado.find({_id : request.params.id}).remove().exec();
+    empleado.find({username: request.params.username}).remove().exec();
     return reply('Empleado borrado con exito!!');
   }
 }
