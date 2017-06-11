@@ -1,16 +1,20 @@
 <template>
   <div id="app">
-    <hello></hello>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello.vue'
+import Empleado from './components/Empleado.vue'
 
 export default {
   name: 'app',
   components: {
-    Hello
+    Empleado
+  },
+  mounted(){
+    $('.modal').modal();
+
   }
 }
 </script>
