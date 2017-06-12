@@ -5,6 +5,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Empleado from './components/Empleado.vue'
 import crearEmpleado from './components/crearEmpleado.vue'
+import Admi from './components/admi.vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
@@ -20,6 +21,10 @@ const router = new VueRouter({
       path: '/crearempleado',
       component: crearEmpleado
     },
+     name:'AdmiView',
+     path:'/admi',
+     component: Admi
+   }
   ]
 })
 
