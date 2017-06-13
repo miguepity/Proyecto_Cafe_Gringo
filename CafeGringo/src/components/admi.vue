@@ -9,141 +9,150 @@
         </ul>
       </div>
     </nav>
-    <div class="row">
-      <div class="col l3 s2 col-izquierda">
+    <div class="row row-principal">
+      <div class="col l3 s2 col-izquierda col-principal">
         <br>
         <h4 class="nombre">Walther Carrasco</h4>
         <h5>UX</h5>
       </div>
-      <div class="col l9 s10 col-derecha">
+      <div class="col l9 s10 col-derecha col-principal">
         <div class="row">
-          <div class="col l1 offset-l5">
+          <div class="col l3 offset-l2">
             <div class="w-card">
-              <img class="w-card-image" :src="reporte">
+              <img class="w-card-image" src="./image/reporte.png">
               <p class="w-card-titulo">Reportes</p>
               <p class="w-card-descripcion">Generar reportes de los empleados</p>
               <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col l2 offset-l1">
+          <div class="col l3 offset-l2">
             <div class="w-card">
-              <img class="w-card-image" :src="createImg">
+              <img class="w-card-image" src="./image/createEmplyee.png">
               <p class="w-card-titulo">Crear Empleado</p>
               <p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
-                <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
-              </div>
+              <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
             </div>
-            <div class="col l2 offset-l2">
-              <div class="w-card">
-                <img class="w-card-image" :src="removeImg">
-                <p class="w-card-titulo">Eliminar Empleado</p>
-                <p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
-                <a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
-              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col l3 offset-l2">
+            <div class="w-card">
+              <img class="w-card-image" src="./image/removeEmployee.png">
+              <p class="w-card-titulo">Eliminar Empleado</p>
+              <p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
+              <a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
             </div>
-            <div class="col l2 offset-l2">
-              <div class="w-card">
-                <img class="w-card-image" :src="updateImg">
-                <p class="w-card-titulo">Actualizar Empleado</p>
-                <p class="w-card-descripcion">Actualiza los datos de un empleado</p>
-                <a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
-              </div>
+          </div>
+          <div class="col l3 offset-l2">
+            <div class="w-card">
+              <img class="w-card-image" src="./image/updateEmployee.png">
+              <p class="w-card-titulo">Actualizar Empleado</p>
+              <p class="w-card-descripcion">Actualiza los datos de un empleado</p>
+              <a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
 
-  <script>
-  export default {
-    data () {
-      return {
-        reporte:"./image/reporte.png",
-        createImg:"./image/createEmplyee.png",
-        removeImg:"./image/removeEmployee.png",
-        updateImg:"./image/updateEmployee.png"
-      }
+<script>
+export default {
+  data () {
+    return {
+      reporte:"./image/reporte.png",
+      createImg:"./image/createEmplyee.png",
+      removeImg:"./image/removeEmployee.png",
+      updateImg:"./image/updateEmployee.png"
     }
   }
-  </script>
+}
+</script>
 
-  <style scoped>
-  .nav-wrapper{
-    background-color: white;
-  }
+<style scoped>
+.nav-wrapper{
+  background-color: white;
+}
 
-  .nav-wrapper .brand-logo{
-    background-color: #282B2E;
-    width: 25%;
-    text-align: center;
-  }
+.nav-wrapper .brand-logo{
+  background-color: #282B2E;
+  width: 25%;
+  text-align: center;
+}
 
-  .nav-but{
-    color: #353B40;
-    padding: 0 35px;
-  }
+.nav-but{
+  color: #353B40;
+  padding: 0 35px;
+}
 
-  .col-izquierda{
-    background-color: #353B40;
-    height: 100vh;
-    text-align: center;
-    color: white;
-  }
+.row-principal{
+  display: flex;
+}
 
-  .col-derecha{
-    background-color: #F0F0F2;
-    height: 100vh;
-  }
+.col-izquierda{
+  background-color: #353B40;
+  /*height: 100vh;*/
+  text-align: center;
+  color: white;
+}
 
-  .card .card-image img{
-    width: 75%;
-    display: block;
-    margin: 0 auto;
-  }
+.col-principal{
 
-  .card .card-image{
-    max-height: 80%;
-  }
+}
 
-  .card{
-    margin: 50% auto;
-  }
+.col-derecha{
+  background-color: #F0F0F2;
+  height: 100%;
+}
 
-  .w-card{
-    background-color: white;
-    width: 300px;
-    margin-top: 40%;
-    text-align: center;
-    border-radius: 7px;
-  }
+.card .card-image img{
+  width: 75%;
+  display: block;
+  margin: 0 auto;
+}
 
-  .w-card-titulo{
-    color: #73B2EA;
-    font-size: 200%;
-    margin-bottom: 1%;
-  }
+.card .card-image{
+  max-height: 80%;
+}
 
-  .w-card-image{
-    width: 50%;
-    margin-top: 5%;
-  }
+.card{
+  margin: 50% auto;
+}
 
-  .w-card-descripcion{
-    color: #C1C1C3;
-    font-size: 110%;
-  }
+.w-card{
+  background-color: white;
+  width: 300px;
+  margin-top: 10%;
+  margin-bottom: 13%;
+  text-align: center;
+  border-radius: 7px;
+}
 
-  .w-card-boton{
-    border-radius: 20px;
-    margin-bottom: 5%;
-    background-color: #3B8DDF;
-  }
+.w-card-titulo{
+  color: #73B2EA;
+  font-size: 200%;
+  margin-bottom: 1%;
+}
 
-  .nombre{
-    margin-top: 15%;
-  }
+.w-card-image{
+  width: 50%;
+  margin-top: 5%;
+}
 
-  </style>
+.w-card-descripcion{
+  color: #C1C1C3;
+  font-size: 110%;
+}
+
+.w-card-boton{
+  border-radius: 20px;
+  margin-bottom: 5%;
+  background-color: #3B8DDF;
+}
+
+.nombre{
+  margin-top: 15%;
+}
+
+</style>
