@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="row">
-      <div class="col s12">
+      <div class="col s12 m12 l12">
 
         <div class="container">
           <label><b>Usuario</b></label>
@@ -10,8 +10,14 @@
           <label><b>Contraseña</b></label>
           <input class="pass" type="password" placeholder="Ingrese Contraseña" required>
 
-          <a class="waves-effect waves-light btn"  @click="clickLogin">Log in</a>
-          <span class="psw"><a href="#">Forgot password?</a></span>
+
+          <div class="btn1 col s12 m6">
+            <a class="waves-effect waves-light btn"  @click="clickLogin">Log in</a>
+          </div>
+          <div class="pass col s12 m6">
+            <span class="psw"><a href="#" class="flow-text">Forgot password?</a></span>
+          </div>
+
         </div>
       </div>
     </div>
@@ -88,10 +94,11 @@ form{
   border: 3px solid #f1f1f1;
   font-family: 'Roboto', sans-serif;
   background-image: url("./image/cafe-cup.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding-bottom: 243px;
   background-position:bottom;
+  position: relative;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
 }
 
 input[type=text]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder {
@@ -100,60 +107,60 @@ input[type=text]::-webkit-input-placeholder, input[type=password]::-webkit-input
 
 input[type=text], input[type=password]{
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    padding: 2% 4%;
+    margin: 2% 0;
     display: inline-block;
     box-sizing: border-box;
     background-color: white;
 }
 
 input[type=text]{
-  margin-bottom: 40px;
+  margin-bottom: 10%;
+}
+
+.btn1{
+  padding-left: 0%;
 }
 
 .btn{
     background-color: #4CAF50;
     color: white;
-    padding: 5px 20px;
-    margin: 8px 0px;
+    padding: 2% 15%;
+    margin: 2% 0;
     border: none;
     cursor: pointer;
-    height: 45px;
+    height: 18%;
 }
 
 .btn:hover {
     opacity: 0.8;
 }
 
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-}
-
 .container {
-  background-color: rgba(255,255,255,.60);
+    background-color: rgba(255,255,255,.60);
     margin-top: 5%;
-    padding-top: 40px;
-    padding-left: 100px;
-    padding-right: 100px;
-    margin-right: 0px;
-    border-right-width: 20px;
-    padding-bottom: 40px;
-    height: 340px;
-    width: 600px;
-    margin-left: 670px;
+    padding-top: 2%;
+    padding-left: 6%;
+    padding-right: 8%;
+    border-right-width: 5%;
+    padding-bottom: 8%;
+    width: 40%;
+    margin-left: 55%;
     border-radius: 6px 6px 6px 6px;
 }
 
-span.psw {
-    float: right;
-    padding-top: 20px;
+.pass{
+  padding-left: 25%;
+}
+
+.psw a{
+  padding-left: 10%;
+  font-size: 120%;
 }
 
 form label{
   color: black;
-  font-size: 20px;
+  font-size: 139%;
 }
-
 
 </style>
