@@ -17,7 +17,7 @@
       </div>
       <div class="col l9 s10 col-derecha col-principal">
         <div class="row">
-          <div class="col l3 offset-l2">
+          <div class="col l3 offset-l2 m3 offset-m3 s12">
             <div class="w-card">
               <img class="w-card-image" src="./image/reporte.png">
               <p class="w-card-titulo">Reportes</p>
@@ -25,7 +25,7 @@
               <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
             </div>
           </div>
-          <div class="col l3 offset-l2">
+          <div class="col l3 offset-l2 m3 offset-m3 s12">
             <div class="w-card">
               <img class="w-card-image" src="./image/createEmplyee.png">
               <p class="w-card-titulo">Crear Empleado</p>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col l3 offset-l2">
+          <div class="col l3 offset-l2 m3 offset-m3 s12">
             <div class="w-card">
               <img class="w-card-image" src="./image/removeEmployee.png">
               <p class="w-card-titulo">Eliminar Empleado</p>
@@ -43,7 +43,7 @@
               <a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
             </div>
           </div>
-          <div class="col l3 offset-l2">
+          <div class="col l3 offset-l2 m3 offset-m3 s12">
             <div class="w-card">
               <img class="w-card-image" src="./image/updateEmployee.png">
               <p class="w-card-titulo">Actualizar Empleado</p>
@@ -122,7 +122,8 @@ export default {
 
 .w-card{
   background-color: white;
-  width: 300px;
+  width: 110%;
+  height: 38vh;
   margin-top: 10%;
   margin-bottom: 13%;
   text-align: center;
