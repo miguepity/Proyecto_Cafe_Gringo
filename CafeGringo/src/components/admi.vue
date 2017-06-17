@@ -128,6 +128,10 @@ export default {
   margin-bottom: 13%;
   text-align: center;
   border-radius: 7px;
+  /*display: flex;*/
+  display: inline-table;
+  justify-content: center;
+  align-items: center;
 }
 
 .w-card-titulo{
@@ -139,6 +143,7 @@ export default {
 .w-card-image{
   width: 50%;
   margin-top: 5%;
+  height: auto;
 }
 
 .w-card-descripcion{
