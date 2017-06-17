@@ -75,15 +75,17 @@
 export default {
   data () {
     return {
-      nombre:"Admin!"
+      nombre:""
     }
   },
-  beforeCreate:function(){
+  mounted:function(){
     //"/cafe/empleado/{username}"
     var username = localStorage.getItem("username");
+    console.log(username);
     this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
       var empleado = res.body;
-      this.nombre = empleado.Nombre;
+      console.log(empleado);
+      this.nombre = empleado[0].Nombre;
     });
   }
 }
