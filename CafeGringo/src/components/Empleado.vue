@@ -56,7 +56,7 @@
 export default {
   data(){
     return{
-      user:{
+      user{
         username:"",
         pass:""
       },
