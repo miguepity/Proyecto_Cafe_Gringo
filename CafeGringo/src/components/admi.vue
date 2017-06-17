@@ -21,14 +21,18 @@
         </ul>
       </div>
     </div>
+
     <div class="row">
-      <div class="col s6 m6 l6">
-        <div class="w-card">
-        <img class="w-card-image" src="./image/createEmplyee.png">
-        <p class="w-card-titulo">Crear Empleado</p>
-        <p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
-        <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
+      <div class="col s12 m12 l12">
+        <div class="container">
+          <div class="w-card">
+          <img class="w-card-image" src="./image/createEmplyee.png">
+          <p class="w-card-titulo">Crear Empleado</p>
+          <p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
+          <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
+          </div>
         </div>
+
       </div>
 
     </div>
