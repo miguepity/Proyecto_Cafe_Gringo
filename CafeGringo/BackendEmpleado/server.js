@@ -27,7 +27,12 @@ db.once('open', function callback() {
 });
 //registrar plugins
 server.register([inert, auth], function(err){
-
+  server.auth.strategy('session', 'cookie', {
+    password: 'secretpasswordforencryption',
+    cookie: 'cafe-el-gringo-cookie',
+    ttl: 24 * 60 * 60 * 1000, // Set session to 1 day
+    isSecure: false
+  });
 	server.route(
       // metodos disponibles create(post) body:{...},read(get)  queryString,params,update(put)  body:{...},delete(delete)  queryString,params
     routes.endpoints
