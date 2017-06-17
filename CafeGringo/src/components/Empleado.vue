@@ -5,10 +5,10 @@
 
         <div class="container">
           <label><b>Usuario</b></label>
-          <input class="username" type="text" placeholder="Ingrese Usuario" required>
+          <input class="username" type="text" placeholder="Ingrese Usuario" required v-model="user.username">
 
           <label><b>Contraseña</b></label>
-          <input class="pass" type="password" placeholder="Ingrese Contraseña" required>
+          <input class="pass" type="password" placeholder="Ingrese Contraseña" required v-model="user.pass">
 
 
           <div class="btn1 col s12 m6">
@@ -27,7 +27,7 @@
         <div class="modal-content">
           <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&timezone=America%2FTegucigalpa" width="100%" height="130" frameborder="0" seamless></iframe>
 
-          <h4>{{Nombre}}</h4>
+          <h4>Bienvenido {{Nombre}}</h4>
             <div class="row">
               <div class="col s4" >
                 <p>Fecha:</p>
@@ -56,28 +56,74 @@
 export default {
   data(){
     return{
-      Id: '',
-      Nombre:'',
-      Pass:'',
-      date:[],
-      hrIn:[],
-      hrOut:[],
+      user:{
+        username:"",
+        pass:""
+      },
+      userLogin{
+        username:"",
+        genero:"",
+        date:[],
+        hrIn:[],
+        hrOut:[]
+      }
     }
   },
   methods:{
     clickLogin: function(){
-      if($('.username').val()!=="" && $('.pass').val()!==""){
-        $('.modal').modal('open');
-        $('.username').val("");
-        $('.pass').val("");
-      }else{
+      // if($('.username').val()!=="" && $('.pass').val()!==""){
+      //   $('.modal').modal('open');
+      //   $('.username').val("");
+      //   $('.pass').val("");
+      // }else{
+      //   sweetAlert({
+      //     title: "Ohh No!...",
+      //     text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
+      //     type:  "error",
+      //   });
+      //   $('.username').val("");
+      //   $('.pass').val("");
+      // }
+
+
+      //"/cafe/login"
+      console.log("Entrando!");
+      if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
-          title: "Ohh No!...",
-          text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
-          type:  "error",
+            title: "Ohh No!...",
+            text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
+            type:  "error",
+          });
+      }else{
+        //Obtener el nombre
+        this.$http.get("http://localhost:8000/cafe/empleado/"+this.user.username).then((res2)=>{
+          console.log("obteniendo nombre")
+          var empleado = res2.body;
+          this.Nombre = empleado[0].Nombre;
         });
-        $('.username').val("");
-        $('.pass').val("");
+
+        this.$http.post("http://localhost:8000/cafe/login", this.user).then((res)=>{
+          if (res.body.success === true) {
+            localStorage.setItem("username", this.user.username);
+            if (res.body.scope === "empleado") {
+
+              $('.modal').modal('open');
+              // $('.username').val("");
+              // $('.pass').val("");
+            }else if(res.body.scope === "admin"){
+              this.$router.push("/admi")
+            }
+          }else if(res.body.success === false) {
+            console.log("entra al else")
+            sweetAlert({
+               title: "Ohh No!...",
+               text:  "Algo esta mal!...Usuario o contraseña incorrectos",
+               type:  "error",
+             });
+             $('.username').val("");
+             $('.pass').val("");
+          }
+        })
       }
     },
     agree:function(){

@@ -5,9 +5,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import Empleado from './components/Empleado.vue'
 import crearEmpleado from './components/crearEmpleado.vue'
+import Admi from './components/admi.vue'
 import VueRouter from 'vue-router'
+import VueResouce from 'vue-resource'
 
+Vue.use(VueResouce)
 Vue.use(VueRouter)
+
+Vue.http.options.credentials = true;
 const router = new VueRouter({
   routes:[
     {
@@ -20,8 +25,13 @@ const router = new VueRouter({
       path: '/crearempleado',
       component: crearEmpleado
     },
+    {
+     name:'AdmiView',
+     path:'/admi',
+     component: Admi
+    }
   ]
-})
+});
 
 new Vue({ // eslint-disable-line no-new
   router,
