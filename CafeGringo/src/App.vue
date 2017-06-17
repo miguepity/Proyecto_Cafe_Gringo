@@ -6,11 +6,13 @@
 
 <script>
 import Empleado from './components/Empleado.vue'
+import crearEmpleado from './components/crearEmpleado.vue'
 
 export default {
   name: 'app',
   components: {
-    Empleado
+    Empleado,
+    crearEmpleado
   },
   mounted(){
     $('.modal').modal();

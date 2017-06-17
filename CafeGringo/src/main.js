@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Empleado from './components/Empleado.vue'
+import crearEmpleado from './components/crearEmpleado.vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
@@ -13,6 +14,11 @@ const router = new VueRouter({
       name:'LogInEmpleado',
       path:'/',
       component: Empleado
+    },
+    {
+      name: 'CrearEmpleado',
+      path: '/crearempleado',
+      component: crearEmpleado
     },
   ]
 })
