@@ -21,7 +21,7 @@ exports.login = {
             }
             return reply({message: boom.unauthorized('Wrong email or password'), success:false});
           }
-          return reply(boom.notAcceptable('Error Executing Query'));
+          return reply({ message: boom.notAcceptable('Error Executing Query'), success: false});
       });
     }
 };
