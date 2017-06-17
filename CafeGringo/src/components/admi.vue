@@ -1,100 +1,106 @@
 <template>
   <div>
-    <nav>
-      <div class="nav-wrapper">
-        <a href="/" class="brand-logo"><strong>Cafe El Gringo</strong></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="/" class="nav-but">Home</a></li>
-          <li><a href="#" class="nav-but">LogOut</a></li>
+
+    <div class="sideNav">
+      <div class="brand">
+        Cafe El Gringo
+      </div>
+      <p class="nombreSide">{{nombre}}</p>
+      <p class="descriptionSide">Administrador</p>
+      <div class="menu-list">
+        <ul class="menu-content">
+          <li>
+            <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+          </li>
         </ul>
       </div>
-    </nav>
-    <div class="row row-principal">
-      <div class="col l3 s2 col-izquierda col-principal">
-        <br>
-        <h4 class="nombre">Walther Carrasco</h4>
-        <h5>UX</h5>
-      </div>
-      <div class="col l9 s10 col-derecha col-principal">
-        <div class="row">
-          <div class="col l3 offset-l2 m3 offset-m3 s12">
-            <div class="w-card">
-              <img class="w-card-image" src="./image/reporte.png">
-              <p class="w-card-titulo">Reportes</p>
-              <p class="w-card-descripcion">Generar reportes de los empleados</p>
-              <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
-            </div>
-          </div>
-          <div class="col l3 offset-l2 m3 offset-m3 s12">
-            <div class="w-card">
-              <img class="w-card-image" src="./image/createEmplyee.png">
-              <p class="w-card-titulo">Crear Empleado</p>
-              <p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
-              <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col l3 offset-l2 m3 offset-m3 s12">
-            <div class="w-card">
-              <img class="w-card-image" src="./image/removeEmployee.png">
-              <p class="w-card-titulo">Eliminar Empleado</p>
-              <p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
-              <a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
-            </div>
-          </div>
-          <div class="col l3 offset-l2 m3 offset-m3 s12">
-            <div class="w-card">
-              <img class="w-card-image" src="./image/updateEmployee.png">
-              <p class="w-card-titulo">Actualizar Empleado</p>
-              <p class="w-card-descripcion">Actualiza los datos de un empleado</p>
-              <a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
+
+    <!-- <div class="row row-principal">
+    <div class="col l3 s2 col-izquierda col-principal">
+    <br>
+    <h4 class="nombre">Walther Carrasco</h4>
+    <h5>UX</h5>
   </div>
+  <div class="col l9 s10 col-derecha col-principal">
+  <div class="row">
+  <div class="col l3 offset-l2 m3 offset-m3 s12">
+  <div class="w-card">
+  <img class="w-card-image" src="./image/reporte.png">
+  <p class="w-card-titulo">Reportes</p>
+  <p class="w-card-descripcion">Generar reportes de los empleados</p>
+  <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
+</div>
+</div>
+<div class="col l3 offset-l2 m3 offset-m3 s12">
+<div class="w-card">
+<img class="w-card-image" src="./image/createEmplyee.png">
+<p class="w-card-titulo">Crear Empleado</p>
+<p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
+<a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col l3 offset-l2 m3 offset-m3 s12">
+<div class="w-card">
+<img class="w-card-image" src="./image/removeEmployee.png">
+<p class="w-card-titulo">Eliminar Empleado</p>
+<p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
+<a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
+</div>
+</div>
+<div class="col l3 offset-l2 m3 offset-m3 s12">
+<div class="w-card">
+<img class="w-card-image" src="./image/updateEmployee.png">
+<p class="w-card-titulo">Actualizar Empleado</p>
+<p class="w-card-descripcion">Actualiza los datos de un empleado</p>
+<a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
+</div>
+</div>
+</div>
+</div>
+</div> -->
+</div>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      reporte:"./image/reporte.png",
-      createImg:"./image/createEmplyee.png",
-      removeImg:"./image/removeEmployee.png",
-      updateImg:"./image/updateEmployee.png"
+      nombre:"Admin!"
     }
+  },
+  beforeCreate:function(){
+    //"/cafe/empleado/{username}"
+    var username = localStorage.getItem("username");
+    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+      var empleado = res.body;
+      this.nombre = empleado.Nombre;
+    });
   }
 }
+
 </script>
 
 <style scoped>
-.nav-wrapper{
-  background-color: white;
-}
 
-.nav-wrapper .brand-logo{
-  background-color: #282B2E;
-  width: 25%;
-  text-align: center;
-}
-
-.nav-but{
-  color: #353B40;
-  padding: 0 35px;
-}
-
-.row-principal{
-  display: flex;
+/*.row-principal{
+display: flex;
 }
 
 .col-izquierda{
-  background-color: #353B40;
-  /*height: 100vh;*/
-  text-align: center;
-  color: white;
+background-color: #353B40;
+/*height: 100vh;
+text-align: center;
+color: white;
 }
 
 .col-principal{
@@ -102,63 +108,130 @@ export default {
 }
 
 .col-derecha{
-  background-color: #F0F0F2;
-  height: 100%;
+background-color: #F0F0F2;
+height: 100%;
 }
 
 .card .card-image img{
-  width: 75%;
-  display: block;
-  margin: 0 auto;
+width: 75%;
+display: block;
+margin: 0 auto;
 }
 
 .card .card-image{
-  max-height: 80%;
+max-height: 80%;
 }
 
 .card{
-  margin: 50% auto;
+margin: 50% auto;
 }
 
 .w-card{
-  background-color: white;
-  width: 110%;
-  height: 38vh;
-  margin-top: 10%;
-  margin-bottom: 13%;
-  text-align: center;
-  border-radius: 7px;
-  /*display: flex;*/
-  display: inline-table;
-  justify-content: center;
-  align-items: center;
+background-color: white;
+width: 110%;
+height: 38vh;
+margin-top: 10%;
+margin-bottom: 13%;
+text-align: center;
+border-radius: 7px;
+/*display: flex;
+display: inline-table;
+justify-content: center;
+align-items: center;
 }
 
 .w-card-titulo{
-  color: #73B2EA;
-  font-size: 200%;
-  margin-bottom: 1%;
+color: #73B2EA;
+font-size: 200%;
+margin-bottom: 1%;
 }
 
 .w-card-image{
-  width: 50%;
-  margin-top: 5%;
-  height: auto;
+width: 50%;
+margin-top: 5%;
+height: auto;
 }
 
 .w-card-descripcion{
-  color: #C1C1C3;
-  font-size: 110%;
+color: #C1C1C3;
+font-size: 110%;
 }
 
 .w-card-boton{
-  border-radius: 20px;
-  margin-bottom: 5%;
-  background-color: #3B8DDF;
+border-radius: 20px;
+margin-bottom: 5%;
+background-color: #3B8DDF;
 }
 
 .nombre{
-  margin-top: 15%;
+margin-top: 15%;
+}*/
+
+.sideNav{
+  overflow: auto;
+  font-family: verdana;
+  font-size: 12px;
+  font-weight: 200;
+  background-color: #2e353d;
+  position: fixed;
+  top: 0px;
+  width: 300px;
+  height: 100%;
+  color: #e1ffff;
 }
+
+.sideNav .nombreSide{
+  font-size: 23px;
+  text-align: center;
+}
+
+.sideNav .descriptionSide{
+  font-size: 17px;
+  text-align: center;
+}
+
+.sideNav .brand{
+  background-color: #23282e;
+  line-height: 50px;
+  display: block;
+  text-align: center;
+  font-size: 30px;
+}
+
+.sideNav ul,
+.sideNav li{
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  line-height: 35px;
+  cursor: pointer;
+}
+
+.sideNav li {
+  padding-left: 0px;
+  border-left: 3px solid #2e353d;
+  border-bottom: 1px solid #23282e;
+  border-top:  1px solid #23282e;
+}
+.sideNav li a {
+  text-decoration: none;
+  color: #e1ffff;
+}
+.sideNav li a i {
+  padding-left: 10px;
+  width: 20px;
+  padding-right: 20px;
+}
+
+.sideNav li:hover {
+  border-left: 3px solid #d19b3d;
+  background-color: #4f5b69;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
 
 </style>

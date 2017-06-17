@@ -56,29 +56,50 @@
 export default {
   data(){
     return{
-      Id: '',
-      Nombre:'',
-      Pass:'',
-      date:[],
-      hrIn:[],
-      hrOut:[],
+      user:{
+        username:"",
+        password:""
+      }
     }
   },
   methods:{
     clickLogin: function(){
-      if($('.username').val()!=="" && $('.pass').val()!==""){
-        $('.modal').modal('open');
-        $('.username').val("");
-        $('.pass').val("");
-      }else{
-        sweetAlert({
-          title: "Ohh No!...",
-          text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
-          type:  "error",
-        });
-        $('.username').val("");
-        $('.pass').val("");
-      }
+      // if($('.username').val()!=="" && $('.pass').val()!==""){
+      //   $('.modal').modal('open');
+      //   $('.username').val("");
+      //   $('.pass').val("");
+      // }else{
+      //   sweetAlert({
+      //     title: "Ohh No!...",
+      //     text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
+      //     type:  "error",
+      //   });
+      //   $('.username').val("");
+      //   $('.pass').val("");
+      // }
+
+
+      //"/cafe/login"
+      this.$http.post("http://localhost:8000/cafe/login", this.user).then((res)=>{
+        if (res.body.success === true) {
+          localStorage.setItem("username", this.user.username);
+          if (res.body.scope === "empleado") {
+            $('.modal').modal('open');
+            $('.username').val("");
+            $('.pass').val("");
+          }else if(res.body.scope === "admin"){
+            this.$router.push("/admin")
+          }
+        }else if (res.body.success === false) {
+          sweetAlert({
+             title: "Ohh No!...",
+             text:  "Algo esta mal!...Ingrese Usuario y Contraseña!",
+             type:  "error",
+           });
+           $('.username').val("");
+           $('.pass').val("");
+        }
+      })
     },
     agree:function(){
     }
