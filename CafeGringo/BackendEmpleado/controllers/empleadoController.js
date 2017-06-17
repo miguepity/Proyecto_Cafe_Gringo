@@ -88,3 +88,10 @@ exports.getNameEmpleado = {
     reply(empleados);
   }
 }
+
+exports.gethoras ={
+  handler: function(req, res){
+    var empleados = empleado.findOne({username: req.payload.username});
+    res({empleado: empleados, message:"entra"});
+  }
+}
