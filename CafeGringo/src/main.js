@@ -8,9 +8,11 @@ import crearEmpleado from './components/crearEmpleado.vue'
 import Admi from './components/admi.vue'
 import VueRouter from 'vue-router'
 import VueResouce from 'vue-resource'
+import moment from 'moment'
 
 Vue.use(VueResouce)
 Vue.use(VueRouter)
+Vue.use(moment)
 
 Vue.http.options.credentials = true;
 const router = new VueRouter({
