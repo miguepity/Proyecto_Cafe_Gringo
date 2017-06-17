@@ -2,6 +2,10 @@ var empleado = require('../schemas/empleado');
 var mongoose = require('mongoose');
 
 exports.createEmpleado = {
+  auth: {
+    mode:'try',
+    strategy:'session'
+  },
   handler: function(request, reply){
     var empleados = new empleado({
       Nombre: request.payload.Nombre,
@@ -10,6 +14,7 @@ exports.createEmpleado = {
       date: request.payload.date,
       hrIn: request.payload.hrIn,
       hrOut: request.payload.hrOut,
+      scope: request.payload.scope,
     });
     empleados.save(function(err){
       if(!err){
@@ -43,6 +48,7 @@ exports.updateEmpleado = {
           date: request.payload.date,
           hrIn: request.payload.hrIn,
           hrOut: request.payload.hrOut,
+          scope: request.payload.scope,
         }
       }, function(err){
         if(err){
