@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
 var EmpleadoSchema = new mongoose.Schema({
+
   Nombre: String,
   username : {type: String, unique: true, required: true},
   pass: String,
