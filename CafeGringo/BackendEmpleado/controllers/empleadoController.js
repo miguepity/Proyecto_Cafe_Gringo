@@ -1,5 +1,6 @@
 var empleado = require('../schemas/empleado');
 var mongoose = require('mongoose');
+var SHA3 = require("crypto-js/sha3");
 
 exports.createEmpleado = {
   auth: {
@@ -10,7 +11,7 @@ exports.createEmpleado = {
     var empleados = new empleado({
       Nombre: request.payload.Nombre,
       username : request.payload.username,
-      pass: request.payload.pass,
+      pass: String(SHA3(request.payload.pass)),
       date: request.payload.date,
       hrIn: request.payload.hrIn,
       hrOut: request.payload.hrOut,
@@ -71,6 +72,13 @@ exports.deleteEmpleado = {
 exports.getAllEmpleado = {
   handler: function(request, reply){
     var empleados = empleado.find({});
+    reply(empleados);
+  }
+}
+
+exports.getNameEmpleado = {
+  handler: function(request, reply){
+    var empleados = empleado.find({username: request.params.username},{Nombre:1});
     reply(empleados);
   }
 }

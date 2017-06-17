@@ -9,5 +9,6 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 	{method: 'DELETE', path: '/cafe/deletempleado/{username}', config: empleadoController.deleteEmpleado},
 	{method: 'GET', path: '/cafe/empleados', config: empleadoController.getAllEmpleado},
 	{method: 'POST', path: '/cafe/login', config: authController.login},
-	{method: 'GET', path: '/cafe/logout', config: authController.logout}
+	{method: 'GET', path: '/cafe/logout', config: authController.logout},
+	{method: 'GET', path: '/cafe/empleadoname/{username}', config: empleadoController.getNameEmpleado}
 ];

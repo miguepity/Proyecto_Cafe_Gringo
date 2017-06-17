@@ -8,17 +8,16 @@ exports.login = {
     validate: {
       payload: {
         username: joi.string().required(),
-        pass: joi.string().required()
+        pass: joi.string().required(),
       }
     },
     handler: function(request, reply) {
       var pass = String(SHA3(request.payload.pass));
-      empleado.find({username: request.payload.username, pass: pass}, function(err, user){
-
+      empleado.find({username: request.payload.username, pass: pass}, function(err, empleado){
           if(!err){
             if(empleado.length > 0){
               request.cookieAuth.set(empleado[0]);
-              return reply({username: empleado[0].username, scope: empleado[0].scope});
+              return reply({username: empleado[0].username, scope: empleado[0].scope, success:true});
             }
             return reply(boom.unauthorized('Wrong email or password'));
           }
