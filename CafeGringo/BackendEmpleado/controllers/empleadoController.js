@@ -10,6 +10,9 @@ exports.createEmpleado = {
   handler: function(request, reply){
     var empleados = new empleado({
       Nombre: request.payload.Nombre,
+      celular: request.payload.celular,
+      email: request.payload.email,
+      genero: request.payload.genero,
       username : request.payload.username,
       pass: String(SHA3(request.payload.pass)),
       date: request.payload.date,
@@ -44,6 +47,9 @@ exports.updateEmpleado = {
       {$set:
         {
           Nombre: request.payload.Nombre,
+          celular: request.payload.celular,
+          email: request.payload.email,
+          genero: request.payload.genero,
           username : request.payload.username,
           pass: request.payload.pass,
           date: request.payload.date,
