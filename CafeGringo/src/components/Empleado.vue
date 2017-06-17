@@ -60,7 +60,7 @@ export default {
         username:"",
         pass:""
       },
-      userLogin{
+      userLogin:{
         username:"",
         genero:"",
         date:[],
