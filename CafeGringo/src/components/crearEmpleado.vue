@@ -131,14 +131,28 @@ export default {
               sweetAlert({
                 title: "Genial!",
                 text:  "Empleado creado con exito!",
-                type:  "error",
+                type:  "success",
               });
+              this.name="";
+              this.apellido="";
+              this.empleado.username="";
+              this.empleado.pass="";
+              this.conPass="";
+              this.empleado.email="";
+              this.empleado.celular="";
             }else{
               sweetAlert({
                 title: "Ohh No!...",
                 text:  "Algo salio mal!,Intentalo mas tarde!",
                 type:  "error",
               });
+              this.name="";
+              this.apellido="";
+              this.empleado.username="";
+              this.empleado.pass="";
+              this.conPass="";
+              this.empleado.email="";
+              this.empleado.celular="";
             }
           });
         }else{
@@ -158,7 +172,6 @@ export default {
     }
   },
   mounted:function(){
-    //"/cafe/empleado/{username}"
     var username = localStorage.getItem("username");
     console.log(username);
     this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
@@ -203,7 +216,7 @@ h3{
 
 .informacion{
   padding-top: 2%;
-  padding-left: 35%;
+  padding-left: 40%;
 }
 
 .btn{
