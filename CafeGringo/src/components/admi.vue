@@ -7,7 +7,7 @@
           <div class="w-card">
             <img class="w-card-image" src="./image/reporte.png">
             <p class="w-card-titulo">Reportes</p>
-            <p class="w-card-descripcion">Generar reportes de los empleados</p>
+            <p class="w-card-descripcion">Genera reportes de tus empleados</p>
             <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
           </div>
 
@@ -17,8 +17,8 @@
           <div class="w-card">
             <img class="w-card-image" src="./image/createEmplyee.png">
             <p class="w-card-titulo">Crear Empleado</p>
-            <p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
-            <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
+            <p class="w-card-descripcion">Crea y agrega un empleado nuevo</p>
+            <router-link to="/crearempleado"><a class="waves-effect waves-light btn w-card-boton">AGREGAR</a></router-link>
           </div>
 
         </div>
@@ -29,17 +29,17 @@
           <div class="w-card">
             <img class="w-card-image" src="./image/removeEmployee.png">
             <p class="w-card-titulo">Eliminar Empleado</p>
-            <p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
-            <a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
+            <p class="w-card-descripcion">Elimina un empleado</p>
+            <router-link to="/deletempleado"><a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a></router-link>
           </div>
 
         </div>
         <div class="col s8 m7 l5 cardCol offset-l1">
           <div class="w-card">
             <img class="w-card-image" src="./image/updateEmployee.png">
-            <p class="w-card-titulo">Actualizar Empleado</p>
-            <p class="w-card-descripcion">Actualiza los datos de un empleado</p>
-            <a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
+            <p class="w-card-titulo">Editar Empleado</p>
+            <p class="w-card-descripcion">Edita los datos de un empleado</p>
+            <a class="waves-effect waves-light btn w-card-boton">EDITAR</a>
           </div>
 
         </div>
@@ -54,14 +54,42 @@
           <p class="descriptionSide">Administrador</p>
           <div class="menu-list">
             <ul class="menu-content">
+
+              <router-link to="/admi">
               <li>
-                <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
+                <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
               </li>
+              </router-link>
+
+              <router-link to="/admi">
               <li>
-                <a href="#"><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+                <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
               </li>
+              </router-link>
+
+              <router-link to="/admi">
               <li>
-                <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+                <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
+              </li>
+              </router-link>
+
+              <router-link to="/crearempleado">
+              <li>
+                <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
+              </li>
+              </router-link>
+              <router-link to="/deletempleado">
+              <li>
+                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
+              </li>
+              </router-link>
+              <router-link to="/admi">
+              <li>
+                <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
+              </li>
+              </router-link>
+              <li>
+                <a><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
               </li>
             </ul>
           </div>
@@ -80,7 +108,6 @@ export default {
     }
   },
   mounted:function(){
-    //"/cafe/empleado/{username}"
     var username = localStorage.getItem("username");
     console.log(username);
     this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
@@ -236,6 +263,4 @@ background-color: #3B8DDF;
   -ms-transition: all 1s ease;
   transition: all 1s ease;
 }
-
-
 </style>
