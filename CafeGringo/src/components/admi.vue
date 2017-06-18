@@ -13,7 +13,7 @@
 
         </div>
 
-        <div class="col s8 m7 l5 cardCol">
+        <div class="col s8 m7 l5 cardCol offset-l1">
           <div class="w-card">
             <img class="w-card-image" src="./image/createEmplyee.png">
             <p class="w-card-titulo">Crear Empleado</p>
@@ -34,7 +34,7 @@
           </div>
 
         </div>
-        <div class="col s8 m7 l5 cardCol">
+        <div class="col s8 m7 l5 cardCol offset-l1">
           <div class="w-card">
             <img class="w-card-image" src="./image/updateEmployee.png">
             <p class="w-card-titulo">Actualizar Empleado</p>
@@ -104,8 +104,9 @@ export default {
 .rowNav {
   margin-right: 68%;
   padding-left: 0;
-  padding-right: 20%;
-  margin-bottom: 0;
+  padding-right: 0%;
+  padding-bottom: 1%;
+  margin-bottom: 0%;
   width: 100%;
   height: 100%;
   background-color: #f0f0f2;
@@ -113,6 +114,7 @@ export default {
 
 .container{
   margin-left: 0%;
+  margin-right: 0%;
   height: 100%;
   width: 100%;
 
