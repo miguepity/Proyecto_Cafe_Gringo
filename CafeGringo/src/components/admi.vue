@@ -109,7 +109,7 @@ export default {
   margin-bottom: 0%;
   width: 100%;
   height: 100%;
-  background-color: #f0f0f2;
+  background-color: white;
 }
 
 .container{
@@ -139,7 +139,7 @@ margin: 50% auto;
 }
 
 .w-card{
-background-color: white;
+background-color: #f0f0f2;
 width: 110%;
 height: 38vh;
 margin-top: 10%;
