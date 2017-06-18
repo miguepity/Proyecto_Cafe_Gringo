@@ -65,14 +65,41 @@
           <p class="descriptionSide">Administrador</p>
           <div class="menu-list">
             <ul class="menu-content">
+              <router-link to="/admi">
               <li>
                 <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
               </li>
+              </router-link>
+
+              <router-link to="/admi">
               <li>
-                <a href="#"><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+                <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
               </li>
+              </router-link>
+
+              <router-link to="/admi">
               <li>
-                <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+                <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
+              </li>
+              </router-link>
+
+              <router-link to="/crearempleado">
+              <li>
+                <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
+              </li>
+              </router-link>
+              <router-link to="/admi">
+              <li>
+                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
+              </li>
+              </router-link>
+              <router-link to="/admi">
+              <li>
+                <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
+              </li>
+              </router-link>
+              <li>
+                <a><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
               </li>
             </ul>
           </div>
