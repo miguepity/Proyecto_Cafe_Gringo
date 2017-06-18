@@ -1,74 +1,75 @@
 <template>
-  <div>
+  <div class="row rowNav">
+    <div class="container">
+      <div class="row cardRow">
 
-    <div class="sideNav">
-      <div class="brand">
-        Cafe El Gringo
+        <div class="col s8 m7 l5 cardCol">
+          <div class="w-card">
+            <img class="w-card-image" src="./image/reporte.png">
+            <p class="w-card-titulo">Reportes</p>
+            <p class="w-card-descripcion">Generar reportes de los empleados</p>
+            <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
+          </div>
+
+        </div>
+
+        <div class="col s8 m7 l5 cardCol offset-l1">
+          <div class="w-card">
+            <img class="w-card-image" src="./image/createEmplyee.png">
+            <p class="w-card-titulo">Crear Empleado</p>
+            <p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
+            <a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
+          </div>
+
+        </div>
       </div>
-      <p class="nombreSide">{{nombre}}</p>
-      <p class="descriptionSide">Administrador</p>
-      <div class="menu-list">
-        <ul class="menu-content">
-          <li>
-            <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
-          </li>
-        </ul>
+
+      <div class="row cardRow">
+        <div class="col s8 m7 l5 cardCol">
+          <div class="w-card">
+            <img class="w-card-image" src="./image/removeEmployee.png">
+            <p class="w-card-titulo">Eliminar Empleado</p>
+            <p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
+            <a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
+          </div>
+
+        </div>
+        <div class="col s8 m7 l5 cardCol offset-l1">
+          <div class="w-card">
+            <img class="w-card-image" src="./image/updateEmployee.png">
+            <p class="w-card-titulo">Actualizar Empleado</p>
+            <p class="w-card-descripcion">Actualiza los datos de un empleado</p>
+            <a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col  s3 m2 l3 colNav">
+        <div class="sideNav">
+          <div class="brand">
+            Cafe El Gringo
+          </div>
+          <p class="nombreSide">{{nombre}}</p>
+          <p class="descriptionSide">Administrador</p>
+          <div class="menu-list">
+            <ul class="menu-content">
+              <li>
+                <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
-
-    <!-- <div class="row row-principal">
-    <div class="col l3 s2 col-izquierda col-principal">
-    <br>
-    <h4 class="nombre">Walther Carrasco</h4>
-    <h5>UX</h5>
   </div>
-  <div class="col l9 s10 col-derecha col-principal">
-  <div class="row">
-  <div class="col l3 offset-l2 m3 offset-m3 s12">
-  <div class="w-card">
-  <img class="w-card-image" src="./image/reporte.png">
-  <p class="w-card-titulo">Reportes</p>
-  <p class="w-card-descripcion">Generar reportes de los empleados</p>
-  <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
-</div>
-</div>
-<div class="col l3 offset-l2 m3 offset-m3 s12">
-<div class="w-card">
-<img class="w-card-image" src="./image/createEmplyee.png">
-<p class="w-card-titulo">Crear Empleado</p>
-<p class="w-card-descripcion">Agregar a la bd un empleado nuevo</p>
-<a class="waves-effect waves-light btn w-card-boton">AGREGAR</a>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col l3 offset-l2 m3 offset-m3 s12">
-<div class="w-card">
-<img class="w-card-image" src="./image/removeEmployee.png">
-<p class="w-card-titulo">Eliminar Empleado</p>
-<p class="w-card-descripcion">Eliminar a un empleado de la bd</p>
-<a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a>
-</div>
-</div>
-<div class="col l3 offset-l2 m3 offset-m3 s12">
-<div class="w-card">
-<img class="w-card-image" src="./image/updateEmployee.png">
-<p class="w-card-titulo">Actualizar Empleado</p>
-<p class="w-card-descripcion">Actualiza los datos de un empleado</p>
-<a class="waves-effect waves-light btn w-card-boton">ACTUALIZAR</a>
-</div>
-</div>
-</div>
-</div>
-</div> -->
-</div>
 </template>
 
 <script>
@@ -93,25 +94,34 @@ export default {
 </script>
 
 <style scoped>
-
-/*.row-principal{
-display: flex;
+.colNav{
+  padding-left: 0;
+  padding-right: 0;
+  height: 100%;
+  position: fixed;
+  top:0;
+}
+.rowNav {
+  margin-right: 68%;
+  padding-left: 0;
+  padding-right: 0%;
+  padding-bottom: 1%;
+  margin-bottom: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: white;
 }
 
-.col-izquierda{
-background-color: #353B40;
-/*height: 100vh;
-text-align: center;
-color: white;
-}
-
-.col-principal{
+.container{
+  margin-left: 0%;
+  margin-right: 0%;
+  height: 100%;
+  width: 100%;
 
 }
 
-.col-derecha{
-background-color: #F0F0F2;
-height: 100%;
+.cardRow{
+  margin-left: 40%;
 }
 
 .card .card-image img{
@@ -129,14 +139,13 @@ margin: 50% auto;
 }
 
 .w-card{
-background-color: white;
+background-color: #f0f0f2;
 width: 110%;
 height: 38vh;
 margin-top: 10%;
-margin-bottom: 13%;
 text-align: center;
 border-radius: 7px;
-/*display: flex;
+display: flex;
 display: inline-table;
 justify-content: center;
 align-items: center;
@@ -149,7 +158,7 @@ margin-bottom: 1%;
 }
 
 .w-card-image{
-width: 50%;
+width: 20%;
 margin-top: 5%;
 height: auto;
 }
@@ -165,19 +174,12 @@ margin-bottom: 5%;
 background-color: #3B8DDF;
 }
 
-.nombre{
-margin-top: 15%;
-}*/
-
 .sideNav{
-  overflow: auto;
   font-family: verdana;
   font-size: 12px;
   font-weight: 200;
   background-color: #2e353d;
-  position: fixed;
   top: 0px;
-  width: 300px;
   height: 100%;
   color: #e1ffff;
 }
