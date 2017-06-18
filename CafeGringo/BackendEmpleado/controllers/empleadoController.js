@@ -91,7 +91,19 @@ exports.getNameEmpleado = {
 
 exports.gethoras ={
   handler: function(req, res){
-    var empleados = empleado.findOne({username: req.payload.username});
-    res({empleado: empleados, message:"entra"});
+    console.log("Query: "+req.query.username+" Date: "+req.query.date);
+    var username = req.query.username;
+    empleado.findOne({username: username}, function(err, Empleado){
+      if (!err && Empleado) {
+        console.log(Empleado.Nombre);
+        return res({empleado: Empleado, message:"entra"});
+      }else if (!err) {
+        return res(boom.notFound());
+      }else if (err) {
+        return res(boom.wrap(err, "Usuario no encontrado"));
+      }
+    });
+    //console.log(empleados.Nombre);
+    //res({empleado: empleados, message:"entra"});
   }
 }
