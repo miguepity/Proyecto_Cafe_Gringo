@@ -6,6 +6,7 @@ import App from './App.vue'
 import Empleado from './components/Empleado.vue'
 import crearEmpleado from './components/crearEmpleado.vue'
 import Admi from './components/admi.vue'
+import deletEmpleado from './components/deletEmpleado.vue'
 import VueRouter from 'vue-router'
 import VueResouce from 'vue-resource'
 import moment from 'moment'
@@ -31,7 +32,12 @@ const router = new VueRouter({
      name:'AdmiView',
      path:'/admi',
      component: Admi
-    }
+   },
+   {
+     name: 'DeletEmpleado',
+     path: '/deletempleado',
+     component: deletEmpleado
+   }
   ]
 });
 

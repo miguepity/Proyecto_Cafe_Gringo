@@ -8,13 +8,15 @@
 import Empleado from './components/Empleado.vue'
 import crearEmpleado from './components/crearEmpleado.vue'
 import Admi from "./components/admi.vue"
+import deletEmpleado from './components/deletEmpleado.vue'
 
 export default {
   name: 'app',
   components: {
     Empleado,
     crearEmpleado,
-    Admi
+    Admi,
+    deletEmpleado
   },
   mounted(){
     $('.modal').modal();
