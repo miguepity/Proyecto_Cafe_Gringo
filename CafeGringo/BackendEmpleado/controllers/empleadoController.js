@@ -1,5 +1,6 @@
 var empleado = require('../schemas/empleado');
 var mongoose = require('mongoose');
+var moment = require('moment');
 var SHA3 = require("crypto-js/sha3");
 
 exports.createEmpleado = {
@@ -96,6 +97,17 @@ exports.gethoras ={
     empleado.findOne({username: username}, function(err, Empleado){
       if (!err && Empleado) {
         console.log(Empleado.Nombre);
+
+        var dates = Empleado.date;
+        var hrIns = Empleado.hrIn;
+        var hrOut = Empleado.hrOut;
+
+        /*if (dates.length < 0) {
+          //Primera vez que ingresa
+          dates
+        }*/
+
+
         return res({empleado: Empleado, message:"entra"});
       }else if (!err) {
         return res(boom.notFound());
