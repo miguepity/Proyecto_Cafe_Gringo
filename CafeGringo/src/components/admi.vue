@@ -104,15 +104,18 @@ export default {
 .rowNav {
   margin-right: 68%;
   padding-left: 0;
+  padding-right: 20%;
   margin-bottom: 0;
   width: 100%;
   height: 100%;
+  background-color: #f0f0f2;
 }
 
 .container{
   margin-left: 0%;
   height: 100%;
   width: 100%;
+
 }
 
 .cardRow{
