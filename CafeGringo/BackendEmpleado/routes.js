@@ -10,5 +10,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 	{method: 'GET', path: '/cafe/empleados', config: empleadoController.getAllEmpleado},
 	{method: 'POST', path: '/cafe/login', config: authController.login},
 	{method: 'GET', path: '/cafe/logout', config: authController.logout},
-	{method: 'GET', path: '/cafe/empleadoname/{username}', config: empleadoController.getNameEmpleado}
+	{method: 'GET', path: '/cafe/empleadoname/{username}', config: empleadoController.getNameEmpleado},
+	{method: 'GET', path: '/cafe/gethoras', config:empleadoController.gethoras},
+	{method: 'PUT', path: '/cafe/marcarhora', config:empleadoController.marcarhora}
 ];
