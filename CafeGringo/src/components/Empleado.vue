@@ -74,7 +74,8 @@ export default {
   methods:{
     clickLogin: function(){
       console.log("Entrando!");
-
+      console.log(moment().format());
+      console.log(moment().format("hh:mm"));
       if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
           title: "Ohh No!...",
@@ -138,14 +139,18 @@ export default {
         var locals = localStorage.getItem("username");
         this.$http.get("http://localhost:8000/cafe/gethoras?username="+locals+"&date="+fecha).then((res)=>{
           console.log(res.body)
-          // this.userLogin.hrIn = moment(res.body.hrIn, "hmm").format("HH:mm");
-          // this.userLogin.hrOut = moment(res.body.hrOut, "hmm").format("HH:mm");
+
           console.log(res);
           var message = res.body.message;
           if (message === "entra") {
             this.textoBoton = "Marcar Entrada"
           }else if (message === "sale") {
+            this.userLogin.hrIn = moment(res.body.horaEntrada).format("hh:mm");
             this.textoBoton = "Marcar Salida"
+          }else if(message === "YaSalio"){
+            this.userLogin.hrIn = moment(res.body.horaEntrada).format("hh:mm");
+            this.userLogin.hrOut = moment(res.body.horaSalida).format("hh:mm");
+            this.textoBoton = "Ya Marcó Salida"
           }
         });
       }
@@ -153,23 +158,25 @@ export default {
 
     },
     agree:function(){
-      var hrInF = "";
-      var hrOutF = "";
+      var message = "";
+      if (this.textoBoton === "Ya Marcó Salida") {
+        $('.modal').modal('close');
+        $('.username').val("");
+        $('.pass').val("");
+        return;
+      }
       if (this.textoBoton === "Marcar Entrada") {
-        hrInF = moment().format();
-        hrOutF = "nada"
-      }else{
-        hrInF = this.userLogin.hrIn;
-        hrOutF = moment().format();
+        message = "entrada";
+      }else if(this.textoBoton === "Marcar Salida"){
+        message = "salida"
       }
 
       var userEnvio ={
-        date: moment().format(),
         username: localStorage.getItem("username"),
-        hrIn: hrInF,
-        hrOut: hrOutF
+        hora: moment().format(),
+        message: message
       }
-      this.$http.get("http://localhost:8000/cafe/sethoras", userEnvio).then((res)=>{
+      this.$http.put("http://localhost:8000/cafe/marcarhora", userEnvio).then((res)=>{
         if (res.body.success === true) {
           sweetAlert({
             title: "Perfecto!",
