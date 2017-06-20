@@ -88,7 +88,7 @@ export default {
       }else{
 
 
-        this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.user.username).then((res2)=>{
+        this.$http.get("https://backend-cafe-gringo.herokuapp.com/cafe/empleado/"+this.user.username).then((res2)=>{
           var empleado = res2.body;
           this.userLogin.Nombre = empleado[0].Nombre;
           this.userLogin.username = empleado[0].username;
