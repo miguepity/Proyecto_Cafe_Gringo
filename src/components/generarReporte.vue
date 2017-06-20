@@ -1,41 +1,32 @@
 <template lang="html">
   <div class="row rowNav">
     <div class="container">
-      <h3>Eliminar Empleado</h3>
-      <div class="row tabla">
-        <table class="striped responsive-table">
-          <thead>
-            <tr>
-              <th>Nombre Completo</th>
-              <th>Username</th>
-              <th>Genero</th>
-              <th>Correo</th>
-              <th>Celular</th>
-              <th>Fechas de trabajo</th>
-              <th>Horas de Entrada</th>
-              <th>Horas de Salida</th>
-              <th>Propiedad</th>
-              <th>Accion</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr v-for="(row,index) in empleados">
-              <td>{{row.Nombre}}</td>
-              <td>{{row.username}}</td>
-              <td>{{row.genero}}</td>
-              <td>{{row.email}}</td>
-              <td>{{row.celular}}</td>
-              <td>{{formatDate(row.date)}}</td>
-              <td>{{row.hrIn}}</td>
-              <td>{{row.hrOut}}</td>
-              <td>{{row.scope}}</td>
-              <td><a v-on:click="removeEmpleado(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-            </tr>
-          </tbody>
-        </table>
-
+      <h3>Generar Reporte</h3>
+      <div class="row informacion">
+        <div class="col s12 m12 l5">
+          <input type="text" placeholder="Username"  required v-model="username">
+        </div>
       </div>
+
+      <div class="row respuesta">
+        <div class="col s12 m5 l4">
+          <label for="fechaInicio"></label>
+          <input class="datepicker" name="fechaInicio">
+        </div>
+        <div class="col s12 m5 l4">
+          <label for="fechaFin"></label>
+          <input class="datepicker" name="fechaFin">
+        </div>
+      </div>
+
+
+      <div class="row informacion">
+        <div class="col s12 m12 l12">
+          <button class="btn" type="button" name="button" v-on:click="addEmpelado">Agregar</button>
+        </div>
+      </div>
+
+
       <div class="col  s3 m2 l3 colNav">
         <div class="sideNav">
           <div class="brand">
@@ -94,7 +85,13 @@ import moment from 'moment';
 export default {
   data(){
     return{
-      username:''
+      username:'',
+      empleado:{
+        username:'',
+        pass:'',
+        email:'',
+        celular:''
+      }
     }
   }
 }
@@ -130,13 +127,16 @@ h3{
   margin-left: 50%;
 }
 
-.tabla{
-  margin-left: 30%;
+.informacion{
+  padding-top: 2%;
+  padding-left: 40%;
 }
 
-table{
-  overflow-y: scroll;
-
+.btn{
+  margin-left: 30%;
+  border-radius: 20px;
+  margin-bottom: 0%;
+  background-color: #3B8DDF;
 }
 
 .sideNav{
