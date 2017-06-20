@@ -90,6 +90,7 @@ export default {
 
         this.$http.get("https://backend-cafe-gringo.herokuapp.com/cafe/empleado/"+this.user.username).then((res2)=>{
           var empleado = res2.body;
+          console.log(empleado);
           this.userLogin.Nombre = empleado[0].Nombre;
           this.userLogin.username = empleado[0].username;
           this.userLogin.genero = empleado[0].genero;
