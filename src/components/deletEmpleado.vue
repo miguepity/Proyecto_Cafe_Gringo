@@ -92,9 +92,9 @@
 
 <script>
 import moment from 'moment';
-
+import baseUrl from '../../config'
 export default {
-  import baseUrl from '../../config'
+
   data () {
     return {
       empleado:{
