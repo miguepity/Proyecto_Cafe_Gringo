@@ -31,7 +31,6 @@
             <p class="w-card-titulo">Eliminar Empleado</p>
             <p class="w-card-descripcion">Elimina un empleado</p>
             <router-link to="/deletempleado"><a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a></router-link>
-
           </div>
 
         </div>
@@ -41,7 +40,6 @@
             <p class="w-card-titulo">Editar Empleado</p>
             <p class="w-card-descripcion">Edita los datos de un empleado</p>
             <router-link to="/editempleado"><a class="waves-effect waves-light btn w-card-boton">EDITAR</a></router-link>
-
           </div>
 
         </div>

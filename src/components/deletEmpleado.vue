@@ -1,50 +1,39 @@
 <template>
   <div class="row rowNav">
     <div class="container">
-      <div class="row cardRow">
+      <h3>Eliminar Empleado</h3>
+      <div class="row tabla">
+        <table class="striped responsive-table">
+       <thead>
+         <tr>
+             <th>Nombre Completo</th>
+             <th>Username</th>
+             <th>Genero</th>
+             <th>Correo</th>
+             <th>Celular</th>
+             <th>Fechas de trabajo</th>
+             <th>Horas de Entrada</th>
+             <th>Horas de Salida</th>
+             <th>Propiedad</th>
+             <th>Accion</th>
+         </tr>
+       </thead>
 
-        <div class="col s8 m7 l5 cardCol">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/reporte.png">
-            <p class="w-card-titulo">Reportes</p>
-            <p class="w-card-descripcion">Genera reportes de tus empleados</p>
-            <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
-          </div>
-
-        </div>
-
-        <div class="col s8 m7 l5 cardCol offset-l1">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/createEmplyee.png">
-            <p class="w-card-titulo">Crear Empleado</p>
-            <p class="w-card-descripcion">Crea y agrega un empleado nuevo</p>
-            <router-link to="/crearempleado"><a class="waves-effect waves-light btn w-card-boton">CREAR</a></router-link>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="row cardRow">
-        <div class="col s8 m7 l5 cardCol">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/removeEmployee.png">
-            <p class="w-card-titulo">Eliminar Empleado</p>
-            <p class="w-card-descripcion">Elimina un empleado</p>
-            <router-link to="/deletempleado"><a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a></router-link>
-
-          </div>
-
-        </div>
-        <div class="col s8 m7 l5 cardCol offset-l1">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/updateEmployee.png">
-            <p class="w-card-titulo">Editar Empleado</p>
-            <p class="w-card-descripcion">Edita los datos de un empleado</p>
-            <router-link to="/editempleado"><a class="waves-effect waves-light btn w-card-boton">EDITAR</a></router-link>
-
-          </div>
-
-        </div>
+       <tbody>
+         <tr v-for="(row,index) in empleados">
+          <td>{{row.Nombre}}</td>
+          <td>{{row.username}}</td>
+          <td>{{row.genero}}</td>
+          <td>{{row.email}}</td>
+          <td>{{row.celular}}</td>
+          <td>{{formatDate(row.date)}}</td>
+          <td>{{row.hrIn}}</td>
+          <td>{{row.hrOut}}</td>
+          <td>{{row.scope}}</td>
+          <td><a v-on:click="removeEmpleado(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+         </tr>
+       </tbody>
+     </table>
 
       </div>
       <div class="col  s3 m2 l3 colNav">
@@ -56,7 +45,6 @@
           <p class="descriptionSide">Administrador</p>
           <div class="menu-list">
             <ul class="menu-content">
-
               <router-link to="/admi">
               <li>
                 <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
@@ -103,13 +91,62 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   data () {
     return {
-      nombre:""
+      empleado:{
+        Nombre:'',
+        celular:'',
+        email:'',
+        genero:'',
+        username:'',
+        pass:'',
+        date:[
+
+        ],
+        hrIn:[
+
+        ],
+        hrOut:[
+
+        ],
+        scope:'',
+      },
+      empleados:[
+
+      ]
     }
   },
   methods:{
+    removeEmpleado: function(index){
+      var todelete =this.empleados;
+      var main = this;
+      swal({
+        title: "Esta seguro de BORRAR a este empelado?",
+        text: "No podra recuperlo!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, BORRARLO!",
+        closeOnConfirm: false
+      },
+      function(){
+        console.log(todelete.username);
+        main.$http.delete('http://localhost:8000/cafe/deletempleado/'+todelete[index].username).then((response)=>{
+        });
+        todelete.splice(index,1);
+        swal("Eliminado!", "Empleado borrado con exito!", "success");
+      });
+
+    },
+    formatDate(dates){
+        const formattedDates = [];
+        dates.forEach(date => {formattedDates.push(moment(date).format('MM/DD/YYYY'))})
+        console.log(formattedDates);
+        return formattedDates.join(', ');
+    },
     logout:function(){
       this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
         this.$router.push("/");
@@ -118,15 +155,19 @@ export default {
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    console.log(username);
     this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
       var empleado = res.body;
-      console.log(empleado);
       this.nombre = empleado[0].Nombre;
+    });
+    var obj;
+    this.$http.get('http://localhost:8000/cafe/empleados').then((response)=>{
+      for (var i = 0; i < response.body.length; i++) {
+        obj=response.body[i];
+        this.empleados.push(obj);
+      }
     });
   }
 }
-
 </script>
 
 <style scoped>
@@ -155,58 +196,17 @@ export default {
   width: 100%;
 }
 
-.cardRow{
-  margin-left: 40%;
+h3{
+  margin-left: 50%;
 }
 
-.card .card-image img{
-width: 75%;
-display: block;
-margin: 0 auto;
+.tabla{
+  margin-left: 30%;
 }
 
-.card .card-image{
-max-height: 80%;
-}
+table{
+  overflow-y: scroll;
 
-.card{
-margin: 50% auto;
-}
-
-.w-card{
-background-color: #f0f0f2;
-width: 110%;
-height: 38vh;
-margin-top: 10%;
-text-align: center;
-border-radius: 7px;
-display: flex;
-display: inline-table;
-justify-content: center;
-align-items: center;
-}
-
-.w-card-titulo{
-color: #73B2EA;
-font-size: 200%;
-margin-bottom: 1%;
-}
-
-.w-card-image{
-width: 20%;
-margin-top: 5%;
-height: auto;
-}
-
-.w-card-descripcion{
-color: #C1C1C3;
-font-size: 110%;
-}
-
-.w-card-boton{
-border-radius: 20px;
-margin-bottom: 5%;
-background-color: #3B8DDF;
 }
 
 .sideNav{
