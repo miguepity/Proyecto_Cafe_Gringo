@@ -133,8 +133,8 @@ export default {
   },
   methods:{
     set:function(){
-      
-    }
+
+    },
     buscar: function(){
       this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
         if(response.body==""){
