@@ -88,12 +88,15 @@
                 <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
               </li>
               </router-link>
+
               <router-link to="/deletempleado">
               <li>
                 <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
               </li>
               </router-link>
+
               <router-link to="/editempleado">
+
               <li>
                 <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
               </li>
