@@ -77,6 +77,11 @@ export default {
       console.log("Entrando!");
       console.log(moment().format());
       console.log(moment().format("hh:mm"));
+
+      this.$http.get(`${baseUrl.uri}/cafe/empleados`).then((res)=>{
+        console.log(res)
+      });
+
       if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
           title: "Ohh No!...",

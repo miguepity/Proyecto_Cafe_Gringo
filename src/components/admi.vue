@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import baseUrl from '../../config'
 export default {
   data () {
     return {

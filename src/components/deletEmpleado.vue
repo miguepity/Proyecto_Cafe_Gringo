@@ -94,6 +94,7 @@
 import moment from 'moment';
 
 export default {
+  import baseUrl from '../../config'
   data () {
     return {
       empleado:{
