@@ -1,50 +1,55 @@
 <template>
   <div class="row rowNav">
     <div class="container">
-      <div class="row cardRow">
-
-        <div class="col s8 m7 l5 cardCol">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/reporte.png">
-            <p class="w-card-titulo">Reportes</p>
-            <p class="w-card-descripcion">Genera reportes de tus empleados</p>
-            <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
-          </div>
-
+      <h3>Editar Empleado</h3>
+      <div class="row username">
+        <div class="col s12 m6 l6">
+          <input type="text" placeholder="Username para editar" v-model="empleado.username">
         </div>
-
-        <div class="col s8 m7 l5 cardCol offset-l1">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/createEmplyee.png">
-            <p class="w-card-titulo">Crear Empleado</p>
-            <p class="w-card-descripcion">Crea y agrega un empleado nuevo</p>
-            <router-link to="/crearempleado"><a class="waves-effect waves-light btn w-card-boton">CREAR</a></router-link>
-          </div>
-
+        <div class="col s12 m6 l6">
+          <button type="button" class="waves-effect waves-light btn" v-on:click="buscar">Buscar</button>
         </div>
       </div>
-
-      <div class="row cardRow">
-        <div class="col s8 m7 l5 cardCol">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/removeEmployee.png">
-            <p class="w-card-titulo">Eliminar Empleado</p>
-            <p class="w-card-descripcion">Elimina un empleado</p>
-            <router-link to="/deletempleado"><a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a></router-link>
-          </div>
-
-        </div>
-        <div class="col s8 m7 l5 cardCol offset-l1">
-          <div class="w-card">
-            <img class="w-card-image" src="./image/updateEmployee.png">
-            <p class="w-card-titulo">Editar Empleado</p>
-            <p class="w-card-descripcion">Edita los datos de un empleado</p>
-            <router-link to="/editempleado"><a class="waves-effect waves-light btn w-card-boton">EDITAR</a></router-link>
-          </div>
-
-        </div>
-
+      <div class="row respuesta">
+        <input type="text" v-model="empleado.Nombre">
       </div>
+      <div class="row respuesta">
+        <div class="col s12 m6 l6">
+          <input type="password" v-model="empleado.pass">
+        </div>
+        <div class="col s12 m6 l6">
+          <input type="password" v-model="conPass">
+        </div>
+      </div>
+      <div class="row respuesta">
+        <div class="col s8 m5 l4">
+          <input type="text" v-model="empleado.email">
+        </div>
+        <div class="col s8 m5 l4">
+          <input type="text" v-model="empleado.celular">
+        </div>
+        <div class="col s8 m5 l4">
+          <h6>Estado:</h6>
+          <input type="radio" name="prop" id="empleado" checked value="empleado">
+          <label for="empleado">Empleado</label>
+          <input type="radio" name="prop" id="admin" value="admin">
+          <label for="admin">Administrador</label>
+        </div>
+      </div>
+      <div class="row respuesta">
+        <div class="col s12 m5 l4">
+          <input class="datepicker" v-on:change="set">
+        </div>
+        <div class="col s12 m5 l4">
+          <input type="text" v-model="empleado.hrIn">
+        </div>
+        <div class="col s12 m5 l4">
+          <input type="text" v-model="empleado.hrOut">
+        </div>
+      </div>
+      <button type="button" class="edit btn">Editar</button>
+
+
       <div class="col  s3 m2 l3 colNav">
         <div class="sideNav">
           <div class="brand">
@@ -54,7 +59,6 @@
           <p class="descriptionSide">Administrador</p>
           <div class="menu-list">
             <ul class="menu-content">
-
               <router-link to="/admi">
               <li>
                 <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
@@ -104,11 +108,56 @@
 export default {
   data () {
     return {
-      nombre:""
+      nombre:'',
+      conPass:'',
+      date: new Date(),
+      empleado:{
+        Nombre:'',
+        celular:'',
+        email:'',
+        genero:'',
+        username:'',
+        pass:'',
+        date:[
+
+        ],
+        hrIn:[
+
+        ],
+        hrOut:[
+
+        ],
+        scope:'',
+      }
     }
   },
   methods:{
+    set:function(){
+      
+    }
+    buscar: function(){
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
+        if(response.body==""){
+          sweetAlert({
+             title: "Ohh No!...",
+             text:  "Algo esta mal!...Usuario -"+this.empleado.username +"- no existe",
+             type:  "error",
+           });
+           this.empleado.username="";
+        }else{
+          console.log(response.body);
+          this.empleado.Nombre=response.body[0].Nombre;
+          // this.empleado.pass=String(SHA3(response.body[0].pass));
+          // this.conPass=String(SHA3(response.body[0].pass));
+          this.empleado.email=response.body[0].email;
+          this.empleado.celular=response.body[0].celular;
+
+        }
+      });
+    },
+
     logout:function(){
+      alert(this.date);
       this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
         this.$router.push("/");
       });
@@ -116,15 +165,18 @@ export default {
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    console.log(username);
     this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
       var empleado = res.body;
-      console.log(empleado);
       this.nombre = empleado[0].Nombre;
     });
-  }
+  },
+  mounted(){
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+      });
+    }
 }
-
 </script>
 
 <style scoped>
@@ -153,58 +205,20 @@ export default {
   width: 100%;
 }
 
-.cardRow{
+h3{
+  margin-left: 50%;
+}
+
+.username{
   margin-left: 40%;
 }
 
-.card .card-image img{
-width: 75%;
-display: block;
-margin: 0 auto;
+.respuesta{
+  margin-left: 30%;
 }
 
-.card .card-image{
-max-height: 80%;
-}
-
-.card{
-margin: 50% auto;
-}
-
-.w-card{
-background-color: #f0f0f2;
-width: 110%;
-height: 38vh;
-margin-top: 10%;
-text-align: center;
-border-radius: 7px;
-display: flex;
-display: inline-table;
-justify-content: center;
-align-items: center;
-}
-
-.w-card-titulo{
-color: #73B2EA;
-font-size: 200%;
-margin-bottom: 1%;
-}
-
-.w-card-image{
-width: 20%;
-margin-top: 5%;
-height: auto;
-}
-
-.w-card-descripcion{
-color: #C1C1C3;
-font-size: 110%;
-}
-
-.w-card-boton{
-border-radius: 20px;
-margin-bottom: 5%;
-background-color: #3B8DDF;
+.edit{
+  margin-left: 60%;
 }
 
 .sideNav{

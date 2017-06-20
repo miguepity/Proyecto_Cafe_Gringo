@@ -51,7 +51,7 @@ exports.updateEmpleado = {
           email: request.payload.email,
           genero: request.payload.genero,
           username : request.payload.username,
-          pass: request.payload.pass,
+          pass: String(SHA3(request.payload.pass)),
           date: request.payload.date,
           hrIn: request.payload.hrIn,
           hrOut: request.payload.hrOut,
