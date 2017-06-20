@@ -52,7 +52,9 @@
 </template>
 
 <script>
-var moment = require('moment')
+import moment from 'moment'
+import sweetalert from 'sweetalert'
+// import baseUrl from '../../config'
 export default {
   data(){
     return{
