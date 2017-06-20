@@ -137,7 +137,7 @@ export default {
 
     },
     buscar: function(){
-      this.$http.get("`${baseUrl.uri}`/cafe/empleado/"+this.empleado.username).then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.empleado.username).then((response)=>{
         if(response.body==""){
           sweetAlert({
              title: "Ohh No!...",
@@ -166,7 +166,7 @@ export default {
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("`${baseUrl.uri}/cafe/empleado/"+username+"`").then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });

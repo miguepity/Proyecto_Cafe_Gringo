@@ -120,7 +120,7 @@ export default {
   beforeMount(){
     var username = localStorage.getItem("username");
     console.log(username);
-    this.$http.get("`${baseUrl.uri}/cafe/empleado/"+username+"`").then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       console.log(empleado);
       this.nombre = empleado[0].Nombre;

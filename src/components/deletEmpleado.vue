@@ -135,7 +135,7 @@ export default {
       },
       function(){
         console.log(todelete.username);
-        main.$http.delete("`${baseUrl.uri}/cafe/deletempleado/"+todelete[index].username+"`").then((response)=>{
+        main.$http.delete(`${baseUrl.uri}/cafe/deletempleado/`+todelete[index].username).then((response)=>{
         });
         todelete.splice(index,1);
         swal("Eliminado!", "Empleado borrado con exito!", "success");
@@ -156,7 +156,7 @@ export default {
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("`${baseUrl.uri}/cafe/empleado/"+username+"`").then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
