@@ -1,47 +1,34 @@
 <template>
   <div class="row rowNav">
     <div class="container">
-      <h3>Nuevo Empleado</h3>
-      <div class="row informacion">
-        <div class="col s8 m7 l5">
-          <input type="text" placeholder="Nombres"  required v-model="name">
+      <h3>Editar Empleado</h3>
+      <div class="row username">
+        <div class="col s12 m6 l6">
+          <input type="text" placeholder="Username para editar" v-model="empleado.username">
         </div>
-
-        <div class="col s8 m7 l5">
-          <input type="text" placeholder="Apellidos" required v-model="apellido">
-        </div>
-      </div>
-
-      <div class="row informacion">
-        <div class="col s6 m7 l3">
-          <input type="text" placeholder="Usuario" required v-model="empleado.username">
-        </div>
-        <div class="col s6 m7 l4">
-          <input type="password" placeholder="Contraseña" required v-model="empleado.pass">
-        </div>
-        <div class="col s6 m7 l3">
-          <input type="password" placeholder="Confirme Constraseña" required v-model="conPass">
+        <div class="col s12 m6 l6">
+          <button type="button" class="waves-effect waves-light btn" v-on:click="buscar">Buscar</button>
         </div>
       </div>
-
-      <div class="row informacion">
-        <div class="col s8 m7 l5">
-          <input type="text" placeholder="Correo electronico" required v-model="empleado.email">
+      <div class="row respuesta">
+        <input type="text" v-model="empleado.Nombre">
+      </div>
+      <div class="row respuesta">
+        <div class="col s12 m6 l6">
+          <input type="password" v-model="empleado.pass">
         </div>
-        <div class="col s8 m7 l5">
-          <input type="text" placeholder="Celular/Telefono" required v-model="empleado.celular">
+        <div class="col s12 m6 l6">
+          <input type="password" v-model="conPass">
         </div>
       </div>
-
-      <div class="row informacion">
-        <div class="col s8 m5 l6">
-          <h6>Genero:</h6>
-          <input type="radio" name="genero" id="m" value="M" checked>
-          <label for="m">Masculino</label>
-          <input type="radio" name="genero" id="f" value="F">
-          <label for="f">Femenino</label>
+      <div class="row respuesta">
+        <div class="col s8 m5 l4">
+          <input type="text" v-model="empleado.email">
         </div>
-        <div class="col s8 m5 l6">
+        <div class="col s8 m5 l4">
+          <input type="text" v-model="empleado.celular">
+        </div>
+        <div class="col s8 m5 l4">
           <h6>Estado:</h6>
           <input type="radio" name="prop" id="empleado" checked value="empleado">
           <label for="empleado">Empleado</label>
@@ -49,12 +36,19 @@
           <label for="admin">Administrador</label>
         </div>
       </div>
-
-      <div class="row informacion">
-        <div class="col s12 m12 l12">
-          <button class="btn" type="button" name="button" v-on:click="addEmpelado">Agregar</button>
+      <div class="row respuesta">
+        <div class="col s12 m5 l4">
+          <input class="datepicker" v-on:change="set">
+        </div>
+        <div class="col s12 m5 l4">
+          <input type="text" v-model="empleado.hrIn">
+        </div>
+        <div class="col s12 m5 l4">
+          <input type="text" v-model="empleado.hrOut">
         </div>
       </div>
+      <button type="button" class="edit btn">Editar</button>
+
 
       <div class="col  s3 m2 l3 colNav">
         <div class="sideNav">
@@ -88,15 +82,12 @@
                 <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
               </li>
               </router-link>
-
               <router-link to="/deletempleado">
               <li>
                 <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
               </li>
               </router-link>
-
               <router-link to="/editempleado">
-
               <li>
                 <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
               </li>
@@ -117,10 +108,9 @@
 export default {
   data () {
     return {
-      nombre:"",
-      name:'',
-      apellido:'',
+      nombre:'',
       conPass:'',
+      date: new Date(),
       empleado:{
         Nombre:'',
         celular:'',
@@ -138,69 +128,36 @@ export default {
 
         ],
         scope:'',
-      },
+      }
     }
   },
   methods:{
-    addEmpelado:function(){
-      if(this.name!=="" && this.apellido!=="" && this.empleado.username!=="" && this.empleado.pass!=="" && this.conPass!=="" && this.empleado.email!=="" && this.empleado.celular!==""){
-        this.empleado.Nombre =this.name+" "+this.apellido;
-        if(this.empleado.pass===this.conPass){
-          if($('input[name=genero]:checked').val()==="M"){
-            this.empleado.genero= "M";
-          }else if($('input[name=genero]:checked').val()==="F"){
-            this.empleado.genero= "F";
-          }
-          if($('input[name=prop]:checked').val()==="empleado"){
-            this.empleado.scope= "empleado";
-          }else if($('input[name=prop]:checked').val()==="admin"){
-            this.empleado.scope= "admin";
-          }
-          this.$http.post("http://localhost:8000/cafe/creatempleado",this.empleado).then((response)=>{
-            if(response.body.success===true){
-              sweetAlert({
-                title: "Genial!",
-                text:  "Empleado creado con exito!",
-                type:  "success",
-              });
-              this.name="";
-              this.apellido="";
-              this.empleado.username="";
-              this.empleado.pass="";
-              this.conPass="";
-              this.empleado.email="";
-              this.empleado.celular="";
-            }else{
-              sweetAlert({
-                title: "Ohh No!...",
-                text:  "Algo salio mal!,Intentalo mas tarde!",
-                type:  "error",
-              });
-              this.name="";
-              this.apellido="";
-              this.empleado.username="";
-              this.empleado.pass="";
-              this.conPass="";
-              this.empleado.email="";
-              this.empleado.celular="";
-            }
-          });
-        }else{
+    set:function(){
+      
+    }
+    buscar: function(){
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
+        if(response.body==""){
           sweetAlert({
-            title: "Ohh No!...",
-            text:  "Algo esta mal!...La Contrseña no coincide!",
-            type:  "error",
-          });
+             title: "Ohh No!...",
+             text:  "Algo esta mal!...Usuario -"+this.empleado.username +"- no existe",
+             type:  "error",
+           });
+           this.empleado.username="";
+        }else{
+          console.log(response.body);
+          this.empleado.Nombre=response.body[0].Nombre;
+          // this.empleado.pass=String(SHA3(response.body[0].pass));
+          // this.conPass=String(SHA3(response.body[0].pass));
+          this.empleado.email=response.body[0].email;
+          this.empleado.celular=response.body[0].celular;
+
         }
-      }else{
-        sweetAlert({
-          title: "Ohh No!...",
-          text:  "Algo esta mal!...Asegurese de tener todos los campos llenos del fromulario!",
-          type:  "error",
-        });
-      }
+      });
     },
+
     logout:function(){
+      alert(this.date);
       this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
         this.$router.push("/");
       });
@@ -212,9 +169,14 @@ export default {
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
-  }
+  },
+  mounted(){
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+      });
+    }
 }
-
 </script>
 
 <style scoped>
@@ -247,16 +209,16 @@ h3{
   margin-left: 50%;
 }
 
-.informacion{
-  padding-top: 2%;
-  padding-left: 40%;
+.username{
+  margin-left: 40%;
 }
 
-.btn{
+.respuesta{
   margin-left: 30%;
-  border-radius: 20px;
-  margin-bottom: 0%;
-  background-color: #3B8DDF;
+}
+
+.edit{
+  margin-left: 60%;
 }
 
 .sideNav{
