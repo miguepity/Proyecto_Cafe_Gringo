@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import baseUrl from '../../config'
 export default {
   data () {
     return {
@@ -156,7 +157,7 @@ export default {
           }else if($('input[name=prop]:checked').val()==="admin"){
             this.empleado.scope= "admin";
           }
-          this.$http.post("http://localhost:8000/cafe/creatempleado",this.empleado).then((response)=>{
+          this.$http.post(`${baseUrl.uri}/cafe/creatempleado`,this.empleado).then((response)=>{
             if(response.body.success===true){
               sweetAlert({
                 title: "Genial!",
@@ -201,14 +202,14 @@ export default {
       }
     },
     logout:function(){
-      this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
         this.$router.push("/");
       });
     }
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
