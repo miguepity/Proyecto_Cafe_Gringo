@@ -77,10 +77,7 @@ export default {
       console.log("Entrando!");
       console.log(moment().format());
       console.log(moment().format("hh:mm"));
-
-      this.$http.get(`${baseUrl.uri}/cafe/empleados`).then((res)=>{
-        console.log(res)
-      });
+      console.log("Hola Mundo!");
 
       if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
@@ -91,7 +88,7 @@ export default {
       }else{
 
 
-        this.$http.get("`${baseUrl.uri}/cafe/empleado/"+this.user.username+"`").then((res2)=>{
+        this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.user.username).then((res2)=>{
           var empleado = res2.body;
           this.userLogin.Nombre = empleado[0].Nombre;
           this.userLogin.username = empleado[0].username;
@@ -143,7 +140,7 @@ export default {
         this.userLogin.date = moment().format("DD-MM-YYYY");
         var fecha = moment().format();
         var locals = localStorage.getItem("username");
-        this.$http.get("`${baseUrl.uri}/cafe/gethoras?username="+locals+"&date="+fecha+"`").then((res)=>{
+        this.$http.get(`${baseUrl.uri}/cafe/gethoras?username=`+locals+`&date=`+fecha).then((res)=>{
           console.log(res.body)
 
           console.log(res);
