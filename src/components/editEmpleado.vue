@@ -158,6 +158,9 @@ export default {
           }else{
             $('#empleado').attr('checked', 'checked');
           }
+          this.empleado.date=response.body[0].date;
+          this.empleado.hrIn=response.body[0].hrIn;
+          this.empleado.hrOut=response.body[0].hrOut;
         }
       });
     },
@@ -198,20 +201,67 @@ export default {
     editar:function(){
       if(this.pass!=="" && this.conPass!==""){
         if(this.pass===this.conPass){
-          alert("cambio pass")
           if($('input[name=prop]:checked').val()==="empleado"){
             this.empleado.scope= "empleado";
           }else if($('input[name=prop]:checked').val()==="admin"){
             this.empleado.scope= "admin";
           }
+          if(this.date!==""){
+            for (var i = 0; i < this.empleado.date.length; i++) {
+              if((moment(this.empleado.date[i]).isSame(this.date, 'year') && moment(this.empleado.date[i]).isSame(this.date, 'month') && moment(this.empleado.date[i]).isSame(this.date, 'day'))){
+                for (var j = 0; j < this.empleado.hrIn.length; j++) {
+                  if((moment(this.empleado.date[i]).isSame(this.empleado.hrIn[j], 'year') && moment(this.empleado.date[i]).isSame(this.empleado.hrIn[j], 'month') && moment(this.empleado.date[i]).isSame(this.empleado.hrIn[j], 'day'))){
+                    var año=moment(this.empleado.date[i]).format('YYYY');
+                    var mes=moment(this.empleado.date[i]).format('MM');
+                    var dia=moment(this.empleado.date[i]).format('DD');
+                    this.empleado.hrIn[j]=moment(año+'-'+mes+'-'+dia+" "+this.hrIn).format();
+                  }
+                }
+                for (var k = 0; k < this.empleado.hrOut.length; k++) {
+                  for (var j = 0; j < this.empleado.hrOut.length; j++) {
+                    if((moment(this.empleado.date[i]).isSame(this.empleado.hrOut[j], 'year') && moment(this.empleado.date[i]).isSame(this.empleado.hrOut[j], 'month') && moment(this.empleado.date[i]).isSame(this.empleado.hrOut[j], 'day'))){
+                      var año=moment(this.empleado.date[i]).format('YYYY');
+                      var mes=moment(this.empleado.date[i]).format('MM');
+                      var dia=moment(this.empleado.date[i]).format('DD');
+                      this.empleado.hrOut[j]=moment(año+'-'+mes+'-'+dia+" "+this.hrOut).format();
+                    }
+                  }
+                }
+              }
+            }
+            if(this.hrIn!="" && this.hrOut!="")
+            this.empleado.date.push(moment(this.date).format());
+            var año=moment(this.date).format('YYYY');
+            var mes=moment(this.date).format('MM');
+            var dia=moment(this.date).format('DD');
+            this.empleado.hrIn.push(moment(año+'-'+mes+'-'+dia+" "+this.hrIn).format());
+            this.empleado.hrOut.push(moment(año+'-'+mes+'-'+dia+" "+this.hrOut).format());
+          }
+
           var nuevo = {
             Nombre:this.empleado.Nombre,
             celular:this.empleado.celular,
             email:this.empleado.email,
             pass:this.pass,
+            date:this.empleado.date,
+            hrIn:this.empleado.hrIn,
+            hrOut:this.empleado.hrOut,
             scope:this.empleado.scope
           }
           this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+            if(res.body.success===true){
+              sweetAlert({
+                title: "Genial!",
+                text:  "Empleado editado con exito!",
+                type:  "success",
+              });
+            }else{
+              sweetAlert({
+                title: "Ohh No!...",
+                text:  "Algo esta mal!...No se pudo editar el empleado!",
+                type:  "error",
+              });
+            }
           });
         }else{
           sweetAlert({
@@ -220,18 +270,72 @@ export default {
             type:  "error",
           });
         }
-      }else{
-        alert("no cambio pass")
-        var nuevo = {
-          Nombre:this.empleado.Nombre,
-          celular:this.empleado.celular,
-          email:this.empleado.email,
-          genero:this.empleado.genero,
-          scope:this.empleado.scope
-        }
-        this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
-        });
       }
+      // else{
+      //   if($('input[name=prop]:checked').val()==="empleado"){
+      //     this.empleado.scope= "empleado";
+      //   }else if($('input[name=prop]:checked').val()==="admin"){
+      //     this.empleado.scope= "admin";
+      //   }
+      //   if(this.date!==""){
+      //     for (var i = 0; i < this.empleado.date.length; i++) {
+      //       if((moment(this.empleado.date[i]).isSame(this.date, 'year') && moment(this.empleado.date[i]).isSame(this.date, 'month') && moment(this.empleado.date[i]).isSame(this.date, 'day'))){
+      //         alert("estamos igual");
+      //         for (var j = 0; j < this.empleado.hrIn.length; j++) {
+      //           if((moment(this.empleado.date[i]).isSame(this.empleado.hrIn[j], 'year') && moment(this.empleado.date[i]).isSame(this.empleado.hrIn[j], 'month') && moment(this.empleado.date[i]).isSame(this.empleado.hrIn[j], 'day'))){
+      //             var año=moment(this.empleado.date[i]).format('YYYY');
+      //             var mes=moment(this.empleado.date[i]).format('MM');
+      //             var dia=moment(this.empleado.date[i]).format('DD');
+      //             this.empleado.hrIn[j]=moment(año+'-'+mes+'-'+dia+" "+this.hrIn).format();
+      //           }
+      //         }
+      //         for (var k = 0; k < this.empleado.hrOut.length; k++) {
+      //           for (var j = 0; j < this.empleado.hrOut.length; j++) {
+      //             if((moment(this.empleado.date[i]).isSame(this.empleado.hrOut[j], 'year') && moment(this.empleado.date[i]).isSame(this.empleado.hrOut[j], 'month') && moment(this.empleado.date[i]).isSame(this.empleado.hrOut[j], 'day'))){
+      //               var año=moment(this.empleado.date[i]).format('YYYY');
+      //               var mes=moment(this.empleado.date[i]).format('MM');
+      //               var dia=moment(this.empleado.date[i]).format('DD');
+      //               this.empleado.hrOut[j]=moment(año+'-'+mes+'-'+dia+" "+this.hrOut).format();
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //     alert("no hay");
+      //     if(this.hrIn!="" && this.hrOut!="")
+      //     this.empleado.date.push(moment(this.date).format());
+      //     var año=moment(this.date).format('YYYY');
+      //     var mes=moment(this.date).format('MM');
+      //     var dia=moment(this.date).format('DD');
+      //     this.empleado.hrIn.push(moment(año+'-'+mes+'-'+dia+" "+this.hrIn).format());
+      //     this.empleado.hrOut.push(moment(año+'-'+mes+'-'+dia+" "+this.hrOut).format());
+      //   }
+      //
+      //   var nuevo = {
+      //     Nombre:this.empleado.Nombre,
+      //     celular:this.empleado.celular,
+      //     email:this.empleado.email,
+      //     date:this.empleado.date,
+      //     hrIn:this.empleado.hrIn,
+      //     hrOut:this.empleado.hrOut,
+      //     scope:this.empleado.scope
+      //   }
+      //   this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+      //     if(res.body.success===true){
+      //       sweetAlert({
+      //         title: "Genial!",
+      //         text:  "Empleado editado con exito!",
+      //         type:  "success",
+      //       });
+      //     }else{
+      //       sweetAlert({
+      //         title: "Ohh No!...",
+      //         text:  "Algo esta mal!...No se pudo editar el empleado!",
+      //         type:  "error",
+      //       });
+      //     }
+      //   });
+      // }
     }
   },
   beforeMount(){
