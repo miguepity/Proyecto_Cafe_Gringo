@@ -4,7 +4,7 @@
       <h3>Editar Empleado</h3>
       <div class="row username">
         <div class="col s12 m6 l6">
-          <input type="text" placeholder="Username para editar" v-model="empleado.username">
+          <input type="text" placeholder="Username para editar" v-model="username">
         </div>
         <div class="col s12 m6 l6">
           <button type="button" class="waves-effect waves-light btn" v-on:click="buscar">Buscar</button>
@@ -15,7 +15,7 @@
       </div>
       <div class="row respuesta">
         <div class="col s12 m6 l6">
-          <input type="password" v-model="empleado.pass">
+          <input type="password" v-model="pass">
         </div>
         <div class="col s12 m6 l6">
           <input type="password" v-model="conPass">
@@ -113,6 +113,8 @@ export default {
   data () {
     return {
       nombre:'',
+      username:'',
+      pass:'',
       conPass:'',
       date:'',
       hrIn: '',
@@ -139,21 +141,19 @@ export default {
   },
   methods:{
     buscar: function(){
-      this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((response)=>{
         if(response.body==""){
           sweetAlert({
             title: "Ohh No!...",
-            text:  "Algo esta mal!...Usuario -"+this.empleado.username +"- no existe",
+            text:  "Algo esta mal!...Usuario -"+this.username +"- no existe",
             type:  "error",
           });
-          this.empleado.username="";
+          this.username="";
         }else{
           this.empleado.Nombre=response.body[0].Nombre;
-          // this.empleado.pass=String(SHA3(response.body[0].pass));
-          // this.conPass=String(SHA3(response.body[0].pass));
           this.empleado.email=response.body[0].email;
           this.empleado.celular=response.body[0].celular;
-          if(response.body[0].scope==="admi"){
+          if(response.body[0].scope==="admin"){
             $('#admin').attr('checked', 'checked');
           }else{
             $('#empleado').attr('checked', 'checked');
@@ -169,7 +169,7 @@ export default {
     },
     fecha:function(){
       this.date=$('.datepicker').val();
-      this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((response)=>{
         var date = response.body[0].date;
         var hrin = response.body[0].hrIn;
         var hrout = response.body[0].hrOut;
@@ -186,10 +186,52 @@ export default {
             }
           }
         }
+        if(this.hrIn==="" && this.hrOut===""){
+          sweetAlert({
+            title: "Ohh No!...",
+            text:  "No hay registrada una fecha igual a la ingresada!!",
+            type:  "error",
+          });
+        }
       });
     },
     editar:function(){
-
+      if(this.pass!=="" && this.conPass!==""){
+        if(this.pass===this.conPass){
+          alert("cambio pass")
+          if($('input[name=prop]:checked').val()==="empleado"){
+            this.empleado.scope= "empleado";
+          }else if($('input[name=prop]:checked').val()==="admin"){
+            this.empleado.scope= "admin";
+          }
+          var nuevo = {
+            Nombre:this.empleado.Nombre,
+            celular:this.empleado.celular,
+            email:this.empleado.email,
+            pass:this.pass,
+            scope:this.empleado.scope
+          }
+          this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+          });
+        }else{
+          sweetAlert({
+            title: "Ohh No!...",
+            text:  "Algo esta mal!...La Contrseña no coincide!",
+            type:  "error",
+          });
+        }
+      }else{
+        alert("no cambio pass")
+        var nuevo = {
+          Nombre:this.empleado.Nombre,
+          celular:this.empleado.celular,
+          email:this.empleado.email,
+          genero:this.empleado.genero,
+          scope:this.empleado.scope
+        }
+        this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+        });
+      }
     }
   },
   beforeMount(){
