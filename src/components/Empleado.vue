@@ -52,7 +52,9 @@
 </template>
 
 <script>
-var moment = require('moment')
+import moment from 'moment'
+import sweetalert from 'sweetalert'
+// import baseUrl from '../../config'
 export default {
   data(){
     return{
@@ -73,8 +75,6 @@ export default {
   },
   methods:{
     clickLogin: function(){
-      console.log("Entrando!");
-      console.log(moment().format());
       console.log(moment().format("hh:mm"));
       if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
