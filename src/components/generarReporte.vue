@@ -25,58 +25,58 @@
           <button class="btn" type="button" name="button" v-on:click="generarReporte">Generar Reporte</button>
         </div>
       </div>
+    </div>
 
-
-      <div class="col  s3 m2 l3 colNav">
-        <div class="sideNav">
-          <div class="brand">
-            Cafe El Gringo
-          </div>
-          <p class="nombreSide">{{nombre}}</p>
-          <p class="descriptionSide">Administrador</p>
-          <div class="menu-list">
-            <ul class="menu-content">
-              <router-link to="/admi">
-                <li>
-                  <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
-                </li>
-              </router-link>
-
-              <router-link to="/admi">
-                <li>
-                  <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
-                </li>
-              </router-link>
-
-              <router-link to="/generarreporte">
-                <li>
-                  <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
-                </li>
-              </router-link>
-
-              <router-link to="/crearempleado">
-                <li>
-                  <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
-                </li>
-              </router-link>
-              <router-link to="/deletempleado">
-                <li>
-                  <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
-                </li>
-              </router-link>
-              <router-link to="/editempleado">
-                <li>
-                  <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
-                </li>
-              </router-link>
+    <div class="col  s3 m2 l3 colNav">
+      <div class="sideNav">
+        <div class="brand">
+          Cafe El Gringo
+        </div>
+        <p class="nombreSide">{{nombre}}</p>
+        <p class="descriptionSide">Administrador</p>
+        <div class="menu-list">
+          <ul class="menu-content">
+            <router-link to="/admi">
               <li>
-                <a v-on:click="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+                <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
               </li>
-            </ul>
-          </div>
+            </router-link>
+
+            <router-link to="/admi">
+              <li>
+                <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+              </li>
+            </router-link>
+
+            <router-link to="/generarreporte">
+              <li>
+                <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
+              </li>
+            </router-link>
+
+            <router-link to="/crearempleado">
+              <li>
+                <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
+              </li>
+            </router-link>
+            <router-link to="/deletempleado">
+              <li>
+                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
+              </li>
+            </router-link>
+            <router-link to="/editempleado">
+              <li>
+                <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
+              </li>
+            </router-link>
+            <li>
+              <a v-on:click="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -136,7 +136,7 @@ export default {
 }
 
 .container{
-  margin-left: 0%; for=""
+  margin-left: 0%;
   margin-right: 0%;
   height: 100%;
   width: 100%;
@@ -223,5 +223,12 @@ h3{
   -o-transition: all 1s ease;
   -ms-transition: all 1s ease;
   transition: all 1s ease;
+}
+
+.row .col{
+  padding: 0 0;
+}
+.datepicker{
+  margin: 0 50%;
 }
 </style>
