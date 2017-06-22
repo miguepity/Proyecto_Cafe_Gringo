@@ -81,7 +81,7 @@
 
 <script>
 import moment from 'moment';
-
+import baseUrl from '../../config'
 export default {
   data () {
     return {
@@ -118,19 +118,19 @@ export default {
         return formattedDates.join(', ');
     },
     logout:function(){
-      this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
         this.$router.push("/");
       });
     }
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
     // poner que sea por separado la fechas
-    this.$http.get("http://localhost:8000/cafe/empleado/"+this.$route.params.username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.$route.params.username).then((res)=>{
       this.empleado.Nombre = res.body[0].Nombre;
       var date = res.body[0].date;
       var hrin = res.body[0].hrIn;

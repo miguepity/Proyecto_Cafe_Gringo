@@ -90,6 +90,7 @@
 <script>
 import moment from 'moment';
 import baseUrl from '../../config'
+import swal from 'sweetalert'
 export default {
 
   data () {
