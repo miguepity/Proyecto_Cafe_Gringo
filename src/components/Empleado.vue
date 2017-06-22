@@ -52,8 +52,11 @@
 </template>
 
 <script>
-var moment = require('moment')
+
+import moment from 'moment'
+import sweetalert from 'sweetalert'
 import baseUrl from '../../config'
+
 export default {
   data(){
     return{
@@ -74,8 +77,6 @@ export default {
   },
   methods:{
     clickLogin: function(){
-      console.log("Entrando!");
-      console.log(moment().format());
       console.log(moment().format("hh:mm"));
       console.log("Hola Mundo!");
 
@@ -137,14 +138,14 @@ export default {
           username: localStorage.getItem("username"),
           date: moment().format()
         }
-        console.log(userGetHoras);
+
         this.userLogin.date = moment().format("DD-MM-YYYY");
         var fecha = moment().format();
+        
         var locals = localStorage.getItem("username");
-        this.$http.get(`${baseUrl.uri}/cafe/gethoras?username=`+locals+`&date=`+fecha).then((res)=>{
-          console.log(res.body)
 
-          console.log(res);
+        this.$http.get(`${baseUrl.uri}/cafe/gethoras?username=`+locals+`&date=`+fecha).then((res)=>{
+
           var message = res.body.message;
           if (message === "entra") {
             this.textoBoton = "Marcar Entrada"
@@ -180,7 +181,9 @@ export default {
         hora: moment().format(),
         message: message
       }
+
       this.$http.put(`${baseUrl.uri}/cafe/marcarhora`, userEnvio).then((res)=>{
+
         if (res.body.success === true) {
           sweetAlert({
             title: "Perfecto!",

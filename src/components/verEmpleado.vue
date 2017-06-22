@@ -1,33 +1,25 @@
 <template>
   <div class="row rowNav">
     <div class="container">
-      <h3>Empleados</h3>
+      <div class="titulo">
+        <h3>Registro del Empleado</h3>
+        <h6>Nombre: {{this.empleado.Nombre}}, Username: {{this.empleado.username}}</h6>
+      </div>
       <div class="row tabla">
         <table class="striped responsive-table">
        <thead>
          <tr>
-             <th>Nombre Completo</th>
-             <th>Username</th>
-             <th>Genero</th>
-             <th>Correo</th>
-             <th>Celular</th>
-             <th>Propiedad</th>
-             <th>Accion</th>
+             <th>Fecha de Trabajo</th>
+             <th>Hora de Entrada</th>
+             <th>Hora de Salida</th>
          </tr>
        </thead>
 
        <tbody>
          <tr v-for="(row,index) in empleados">
-          <td>{{row.Nombre}}</td>
-          <td>{{row.username}}</td>
-          <td>{{row.genero}}</td>
-          <td>{{row.email}}</td>
-          <td>{{row.celular}}</td>
-          <td>{{row.scope}}</td>
-          <td><a v-on:click="removeEmpleado(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-          <router-link :to="'/verempleado/'+row.username">
-            <td><a><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-          </router-link>
+          <td>{{row.date}}</td>
+          <td>{{row.hrIn}}</td>
+          <td>{{row.hrOut}}</td>
          </tr>
        </tbody>
      </table>
@@ -54,7 +46,7 @@
               </li>
               </router-link>
 
-              <router-link to="/generarreporte">
+              <router-link to="/admi">
               <li>
                 <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
               </li>
@@ -89,17 +81,18 @@
 
 <script>
 import moment from 'moment';
-import baseUrl from '../../config'
-export default {
 
+export default {
   data () {
     return {
+      nombre:'',
+      emp:'',
       empleado:{
         Nombre:'',
         celular:'',
         email:'',
         genero:'',
-        username:'',
+        username:this.$route.params.username,
         pass:'',
         date:[
 
@@ -118,27 +111,6 @@ export default {
     }
   },
   methods:{
-    removeEmpleado: function(index){
-      var todelete =this.empleados;
-      var main = this;
-      swal({
-        title: "Esta seguro de BORRAR a este empelado?",
-        text: "No podra recuperlo!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Si, BORRARLO!",
-        closeOnConfirm: false
-      },
-      function(){
-        console.log(todelete.username);
-        main.$http.delete(`${baseUrl.uri}/cafe/deletempleado/`+todelete[index].username).then((response)=>{
-        });
-        todelete.splice(index,1);
-        swal("Eliminado!", "Empleado borrado con exito!", "success");
-      });
-
-    },
     formatDate(dates){
         const formattedDates = [];
         dates.forEach(date => {formattedDates.push(moment(date).format('MM/DD/YYYY'))})
@@ -146,23 +118,41 @@ export default {
         return formattedDates.join(', ');
     },
     logout:function(){
-      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
+      this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
         this.$router.push("/");
       });
     }
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
+    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
-    var obj;
-    this.$http.get(`${baseUrl.uri}/cafe/empleados`).then((response)=>{
-      for (var i = 0; i < response.body.length; i++) {
-        obj=response.body[i];
-        this.empleados.push(obj);
+    // poner que sea por separado la fechas
+    this.$http.get("http://localhost:8000/cafe/empleado/"+this.$route.params.username).then((res)=>{
+      this.empleado.Nombre = res.body[0].Nombre;
+      var date = res.body[0].date;
+      var hrin = res.body[0].hrIn;
+      var hrout = res.body[0].hrOut;
+      var object = {date:'', hrIn:'', hrOut:''}
+      for (var i = 0; i < date.length; i++) {
+        object.date=date[i];
+        for (var j = 0; j < hrin.length; j++) {
+          if ((moment(date[i]).isSame(hrin[j], 'year') && moment(date[i]).isSame(hrin[j], 'month') && moment(date[i]).isSame(hrin[j], 'day'))){
+            object.hrIn=hrin[j];
+          }
+        }
+        for (var k = 0; k < hrout.length; k++) {
+          if((moment(date[i]).isSame(hrout[k], 'year') &&
+              moment(date[i]).isSame(hrout[k], 'month') && moment(date[i]).isSame(hrout[k], 'day'))){
+            object.hrOut=hrout[k];
+          }
+        }
+        this.empleados.push(object);
+        object={date:'', hrIn:'', hrOut:''}
       }
+
     });
   }
 }
@@ -194,7 +184,7 @@ export default {
   width: 100%;
 }
 
-h3{
+.titulo{
   margin-left: 50%;
 }
 

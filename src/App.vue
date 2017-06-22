@@ -10,6 +10,9 @@ import crearEmpleado from './components/crearEmpleado.vue'
 import Admi from "./components/admi.vue"
 import deletEmpleado from './components/deletEmpleado.vue'
 import editEmpleado from './components/editEmpleado.vue'
+import generarReporte from './components/generarReporte.vue'
+import verEmpleado from './components/verEmpleado.vue'
+
 
 export default {
   name: 'app',
@@ -18,12 +21,15 @@ export default {
     crearEmpleado,
     Admi,
     deletEmpleado,
-    editEmpleado
+    editEmpleado,
+    generarReporte,
+    verEmpleado
+
   },
   mounted(){
     $('.modal').modal();
     $(".button-collapse").sideNav();
-    
+
   }
 }
 </script>

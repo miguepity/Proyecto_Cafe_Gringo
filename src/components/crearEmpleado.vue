@@ -67,7 +67,7 @@
             <ul class="menu-content">
               <router-link to="/admi">
               <li>
-                <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
+                <a><i class="fa fa-coffee" aria-hidden="true"></i>Cafe el Gringo</a>
               </li>
               </router-link>
 
@@ -77,7 +77,7 @@
               </li>
               </router-link>
 
-              <router-link to="/admi">
+              <router-link to="/generarreporte">
               <li>
                 <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
               </li>
@@ -91,7 +91,7 @@
 
               <router-link to="/deletempleado">
               <li>
-                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
+                <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
               </li>
               </router-link>
 

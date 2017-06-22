@@ -27,10 +27,10 @@
       <div class="row cardRow">
         <div class="col s8 m7 l5 cardCol">
           <div class="w-card">
-            <img class="w-card-image" src="./image/removeEmployee.png">
-            <p class="w-card-titulo">Eliminar Empleado</p>
-            <p class="w-card-descripcion">Elimina un empleado</p>
-            <router-link to="/deletempleado"><a class="waves-effect waves-light btn w-card-boton">ELIMINAR</a></router-link>
+            <img class="w-card-image" src="./image/list.png">
+            <p class="w-card-titulo">Mostrar Empleados</p>
+            <p class="w-card-descripcion">Ver Empleados/ Eliminar Empleados</p>
+            <router-link to="/deletempleado"><a class="waves-effect waves-light btn w-card-boton">Mostrar</a></router-link>
 
           </div>
 
@@ -59,7 +59,7 @@
 
               <router-link to="/admi">
               <li>
-                <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
+                <a><i class="fa fa-coffee" aria-hidden="true"></i>Cafe el Gringo</a>
               </li>
               </router-link>
 
@@ -69,7 +69,7 @@
               </li>
               </router-link>
 
-              <router-link to="/admi">
+              <router-link to="/generarreporte">
               <li>
                 <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
               </li>
@@ -82,7 +82,7 @@
               </router-link>
               <router-link to="/deletempleado">
               <li>
-                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
+                <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
               </li>
               </router-link>
               <router-link to="/editempleado">
