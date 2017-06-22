@@ -89,8 +89,10 @@
 
 <script>
 import moment from 'moment';
-
+import baseUrl from '../../config'
+import swal from 'sweetalert'
 export default {
+
   data () {
     return {
       empleado:{
@@ -131,7 +133,7 @@ export default {
       },
       function(){
         console.log(todelete.username);
-        main.$http.delete('http://localhost:8000/cafe/deletempleado/'+todelete[index].username).then((response)=>{
+        main.$http.delete(`${baseUrl.uri}/cafe/deletempleado/`+todelete[index].username).then((response)=>{
         });
         todelete.splice(index,1);
         swal("Eliminado!", "Empleado borrado con exito!", "success");
@@ -145,19 +147,19 @@ export default {
         return formattedDates.join(', ');
     },
     logout:function(){
-      this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
         this.$router.push("/");
       });
     }
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
     var obj;
-    this.$http.get('http://localhost:8000/cafe/empleados').then((response)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleados`).then((response)=>{
       for (var i = 0; i < response.body.length; i++) {
         obj=response.body[i];
         this.empleados.push(obj);
