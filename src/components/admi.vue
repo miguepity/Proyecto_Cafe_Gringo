@@ -7,7 +7,7 @@
           <div class="w-card">
             <img class="w-card-image" src="./image/reporte.png">
             <p class="w-card-titulo">Reportes</p>
-            <p class="w-card-descripcion">Genera reportes de tus empleados</p>
+            <p class="w-card-descripcion">Genera reportes de tus empleados!</p>
             <a class="waves-effect waves-light btn w-card-boton">GENERAR</a>
           </div>
 

@@ -115,6 +115,7 @@
 
 <script>
 import baseUrl from '../../config'
+import sweetalert from 'sweetalert'
 export default {
   data () {
     return {
@@ -159,7 +160,7 @@ export default {
           }
           this.$http.post(`${baseUrl.uri}/cafe/creatempleado`,this.empleado).then((response)=>{
             if(response.body.success===true){
-              sweetAlert({
+              sweetalert({
                 title: "Genial!",
                 text:  "Empleado creado con exito!",
                 type:  "success",
@@ -172,7 +173,7 @@ export default {
               this.empleado.email="";
               this.empleado.celular="";
             }else{
-              sweetAlert({
+              sweetalert({
                 title: "Ohh No!...",
                 text:  "Algo salio mal!,Intentalo mas tarde!",
                 type:  "error",
@@ -187,14 +188,14 @@ export default {
             }
           });
         }else{
-          sweetAlert({
+          sweetalert({
             title: "Ohh No!...",
             text:  "Algo esta mal!...La Contrseña no coincide!",
             type:  "error",
           });
         }
       }else{
-        sweetAlert({
+        sweetalert({
           title: "Ohh No!...",
           text:  "Algo esta mal!...Asegurese de tener todos los campos llenos del fromulario!",
           type:  "error",
