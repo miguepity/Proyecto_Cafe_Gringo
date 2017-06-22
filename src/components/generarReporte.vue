@@ -11,11 +11,11 @@
       <div class="row respuesta">
         <div class="col s12 m5 l4">
           <label for="fechaInicio"></label>
-          <input class="datepicker" name="fechaInicio">
+          <input class="datepicker" name="fechaInicio" id="inicio">
         </div>
         <div class="col s12 m5 l4">
           <label for="fechaFin"></label>
-          <input class="datepicker" name="fechaFin">
+          <input class="datepicker" name="fechaFin" id="fin">
         </div>
       </div>
 
@@ -70,7 +70,7 @@
               </li>
             </router-link>
             <li>
-              <a v-on:click="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+              <a ><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
             </li>
           </ul>
         </div>
@@ -82,21 +82,138 @@
 
 <script>
 import moment from 'moment';
+import sweetAlert from 'sweetalert'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 export default {
   data(){
     return{
       username:'',
-      empleado:{
-        username:'',
-        pass:'',
-        email:'',
-        celular:''
+      fechaInicio:'',
+      fechaFin:'',
+      empleadoThis: {
+        date : [],
+        hrIn : [],
+        hrOut : [],
+        Nombre: ''
       }
     }
   },
   methods:{
     generarReporte:function(){
-      console.log("hola");
+      var $dateInicio = $('#inicio').pickadate();
+      var picker = $dateInicio.pickadate('picker')
+      var fechaInicioo = picker.get('value');
+
+
+      var $dateFin = $('#fin').pickadate();
+      var picker = $dateFin.pickadate('picker')
+      var fechaFinn = picker.get('value');
+
+      this.fechaInicio = moment(fechaInicioo).format();
+      this.fechaFin = moment(fechaFinn).format();
+
+      var before = moment(this.fechaInicio).isBefore(this.fechaFin);
+
+      if (this.username === '' && before === false) {
+        sweetAlert({
+          title: "Ohh No!...",
+          text:  "Algo esta mal!...Ingrese usuario y un rango de fechas valido",
+          type:  "error"
+        });
+      }else if (this.username === '') {
+        sweetAlert({
+          title: "Ohh No!...",
+          text:  "Algo esta mal!...Ingrese usuario",
+          type:  "error"
+        });
+      }else if (before === false) {
+        sweetAlert({
+          title: "Ohh No!...",
+          text:  "Algo esta mal!...Ingrese un rango de fechas valido",
+          type:  "error"
+        });
+      }
+      var Empleado;
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((res)=>{
+        Empleado = res.body;
+        this.empleadoThis.date = Empleado[0].date;
+        console.log("Empleado.date: "+Empleado[0].date);
+        this.empleadoThis.hrIn = Empleado[0].hrIn;
+        this.empleadoThis.hrOut = Empleado[0].hrOut;
+        this.empleadoThis.Nombre = Empleado[0].Nombre;
+        var columns = ["Fecha", "Hora de entrada", "Hora de salida"];
+        var cantDates = this.empleadoThis.date.length;
+        console.log("cantDates: "+cantDates);
+        var rows = [];
+        var encontroEntrada = false, encontroSalida = false;
+        var hrEntrada = '', hrSalida = '';
+        var date = this.empleadoThis.date;
+        var hrIn = this.empleadoThis.hrIn;
+        var hrOut = this.empleadoThis.hrOut;
+        for (var i = 0; i < this.empleadoThis.date.length; i++) {
+          for (var j = 0; j < this.empleadoThis.hrIn.length; j++) {
+            if (moment(this.empleadoThis.date[i]).isSame(this.empleadoThis.hrIn[j], 'year') && moment(this.empleadoThis.date[i]).isSame(this.empleadoThis.hrIn[j], 'month') && moment(this.empleadoThis.date[i]).isSame(this.empleadoThis.hrIn[j], 'day')) {
+              encontroEntrada = true;
+              console.log("encontro entrada");
+              hrEntrada = moment(this.empleadoThis.hrIn[j]).format("hh:mm a")
+            }
+          }
+          for (var j = 0; j < this.empleadoThis.hrOut.length; j++) {
+            if (moment(this.empleadoThis.date[i]).isSame(this.empleadoThis.hrOut[j], 'year') && moment(this.empleadoThis.date[i]).isSame(this.empleadoThis.hrOut[j], 'month') && moment(this.empleadoThis.date[i]).isSame(this.empleadoThis.hrOut[j], 'day')) {
+              encontroSalida = true;
+              console.log("encontro salida");
+              hrSalida = moment(this.empleadoThis.hrOut[j]).format("hh:mm a")
+            }
+          }
+          if (encontroEntrada && encontroSalida) {
+            var newDate = moment(this.empleadoThis.date[i]).zone("-0600").format("DD-MM-YYYY")
+            rows.push([newDate, hrEntrada, hrSalida]);
+            encontroEntrada = false;
+            encontroSalida = false;
+            hrEntrada = '';
+            hrSalida = '';
+          }else if (encontroEntrada && !encontroSalida) {
+            var newDate = moment(this.empleadoThis.date[i]).zone("-0600").format("DD-MM-YYYY")
+            rows.push([newDate, hrEntrada, "-"]);
+            encontroEntrada = false;
+            encontroSalida = false;
+            hrEntrada = '';
+            hrSalida = '';
+          }else if (!encontroEntrada && encontroSalida) {
+            var newDate = moment(this.empleadoThis.date[i]).zone("-0600").format("DD-MM-YYYY")
+            rows.push([newDate, "-", hrSalida]);
+            encontroEntrada = false;
+            encontroSalida = false;
+            hrEntrada = '';
+            hrSalida = '';
+          }else if (!encontroEntrada && !encontroSalida) {
+            var newDate = moment(this.empleadoThis.date[i]).zone("-0600").format("DD-MM-YYYY")
+            rows.push([newDate, "-", "-"]);
+            encontroEntrada = false;
+            encontroSalida = false;
+            hrEntrada = '';
+            hrSalida = '';
+          }
+        }
+        var NombreUsuario = this.empleadoThis.Nombre;
+        var usernameUsuario = this.username;
+        var doc = new jsPDF('p', 'pt');
+        //doc.text('Reporte de Horas', 40, 250, 'center');
+        doc.autoTable(columns, rows,{
+          margin: {top: 160},
+          addPageContent: function(data){
+            var text = "Reporte de Horas",
+            xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2);
+            doc.text(text, xOffset, 70);
+            doc.text("Nombre: "+NombreUsuario, 45, 100);
+            doc.text("Username: "+usernameUsuario, 45, 120);
+          }
+        });
+        doc.save('table.pdf');
+      });
+
+      console.log("inicio: "+this.fechaInicio +" fin: "+this.fechaFin);
     }
   },
   beforeMount(){
