@@ -22,7 +22,7 @@
 
       <div class="row informacion">
         <div class="col s12 m12 l12">
-          <button class="btn" type="button" name="button" v-on:click="addEmpelado">Agregar</button>
+          <button class="btn" type="button" name="button" v-on:click="generarReporte">Generar Reporte</button>
         </div>
       </div>
 
@@ -48,7 +48,7 @@
                 </li>
               </router-link>
 
-              <router-link to="/admi">
+              <router-link to="/generarreporte">
                 <li>
                   <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
                 </li>
@@ -93,7 +93,26 @@ export default {
         celular:''
       }
     }
+  },
+  methods{
+    generarReporte:function(){
+      console.log("hola");
+    }
+  },
+  beforeMount(){
+    var username = localStorage.getItem("username");
+    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+      var empleado = res.body;
+      this.nombre = empleado[0].Nombre;
+    });
+  },
+  mounted(){
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year
+    });
   }
+
 }
 </script>
 
@@ -117,7 +136,7 @@ export default {
 }
 
 .container{
-  margin-left: 0%;
+  margin-left: 0%; for=""
   margin-right: 0%;
   height: 100%;
   width: 100%;
@@ -129,7 +148,11 @@ h3{
 
 .informacion{
   padding-top: 2%;
-  padding-left: 40%;
+  padding-left: 60%;
+}
+
+.respuesta{
+  padding-left: 50%;
 }
 
 .btn{
