@@ -94,7 +94,7 @@ export default {
       }
     }
   },
-  methods{
+  methods:{
     generarReporte:function(){
       console.log("hola");
     }

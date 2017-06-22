@@ -133,14 +133,12 @@ export default {
           username: localStorage.getItem("username"),
           date: moment().format()
         }
-        console.log(userGetHoras);
+
         this.userLogin.date = moment().format("DD-MM-YYYY");
         var fecha = moment().format();
+        
         var locals = localStorage.getItem("username");
         this.$http.get("http://localhost:8000/cafe/gethoras?username="+locals+"&date="+fecha).then((res)=>{
-          console.log(res.body)
-
-          console.log(res);
           var message = res.body.message;
           if (message === "entra") {
             this.textoBoton = "Marcar Entrada"
@@ -176,6 +174,7 @@ export default {
         hora: moment().format(),
         message: message
       }
+      console.log(userEnvio.hora);
       this.$http.put("http://localhost:8000/cafe/marcarhora", userEnvio).then((res)=>{
         if (res.body.success === true) {
           sweetAlert({
