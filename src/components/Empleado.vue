@@ -52,9 +52,11 @@
 </template>
 
 <script>
+
 import moment from 'moment'
-import sweetalert from 'sweetalert'
-// import baseUrl from '../../config'
+import sweetAlert from 'sweetalert'
+import baseUrl from '../../config'
+
 export default {
   data(){
     return{
@@ -76,6 +78,8 @@ export default {
   methods:{
     clickLogin: function(){
       console.log(moment().format("hh:mm"));
+      console.log("Hola Mundo!");
+
       if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
           title: "Ohh No!...",
@@ -85,8 +89,9 @@ export default {
       }else{
 
 
-        this.$http.get("http://localhost:8000/cafe/empleado/"+this.user.username).then((res2)=>{
+        this.$http.get("https://backend-cafe-gringo.herokuapp.com/cafe/empleado/"+this.user.username).then((res2)=>{
           var empleado = res2.body;
+          console.log(empleado);
           this.userLogin.Nombre = empleado[0].Nombre;
           this.userLogin.username = empleado[0].username;
           this.userLogin.genero = empleado[0].genero;
@@ -102,7 +107,7 @@ export default {
 
 
 
-        this.$http.post("http://localhost:8000/cafe/login", this.user).then((res)=>{
+        this.$http.post(`${baseUrl.uri}/cafe/login`, this.user).then((res)=>{
           if (res.body.success === true) {
             localStorage.setItem("username", this.user.username);
             if (res.body.scope === "empleado") {
@@ -133,14 +138,14 @@ export default {
           username: localStorage.getItem("username"),
           date: moment().format()
         }
-        console.log(userGetHoras);
+
         this.userLogin.date = moment().format("DD-MM-YYYY");
         var fecha = moment().format();
-        var locals = localStorage.getItem("username");
-        this.$http.get("http://localhost:8000/cafe/gethoras?username="+locals+"&date="+fecha).then((res)=>{
-          console.log(res.body)
 
-          console.log(res);
+        var locals = localStorage.getItem("username");
+
+        this.$http.get(`${baseUrl.uri}/cafe/gethoras?username=`+locals+`&date=`+fecha).then((res)=>{
+
           var message = res.body.message;
           if (message === "entra") {
             this.textoBoton = "Marcar Entrada"
@@ -176,7 +181,9 @@ export default {
         hora: moment().format(),
         message: message
       }
-      this.$http.put("http://localhost:8000/cafe/marcarhora", userEnvio).then((res)=>{
+
+      this.$http.put(`${baseUrl.uri}/cafe/marcarhora`, userEnvio).then((res)=>{
+
         if (res.body.success === true) {
           sweetAlert({
             title: "Perfecto!",

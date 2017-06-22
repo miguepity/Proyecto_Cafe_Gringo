@@ -77,7 +77,7 @@
               </li>
               </router-link>
 
-              <router-link to="/admi">
+              <router-link to="/generarreporte">
               <li>
                 <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
               </li>
@@ -114,6 +114,8 @@
 </template>
 
 <script>
+import baseUrl from '../../config'
+import sweetalert from 'sweetalert'
 export default {
   data () {
     return {
@@ -156,9 +158,9 @@ export default {
           }else if($('input[name=prop]:checked').val()==="admin"){
             this.empleado.scope= "admin";
           }
-          this.$http.post("http://localhost:8000/cafe/creatempleado",this.empleado).then((response)=>{
+          this.$http.post(`${baseUrl.uri}/cafe/creatempleado`,this.empleado).then((response)=>{
             if(response.body.success===true){
-              sweetAlert({
+              sweetalert({
                 title: "Genial!",
                 text:  "Empleado creado con exito!",
                 type:  "success",
@@ -171,7 +173,7 @@ export default {
               this.empleado.email="";
               this.empleado.celular="";
             }else{
-              sweetAlert({
+              sweetalert({
                 title: "Ohh No!...",
                 text:  "Algo salio mal!,Intentalo mas tarde!",
                 type:  "error",
@@ -186,14 +188,14 @@ export default {
             }
           });
         }else{
-          sweetAlert({
+          sweetalert({
             title: "Ohh No!...",
             text:  "Algo esta mal!...La Contrseña no coincide!",
             type:  "error",
           });
         }
       }else{
-        sweetAlert({
+        sweetalert({
           title: "Ohh No!...",
           text:  "Algo esta mal!...Asegurese de tener todos los campos llenos del fromulario!",
           type:  "error",
@@ -201,14 +203,14 @@ export default {
       }
     },
     logout:function(){
-      this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
         this.$router.push("/");
       });
     }
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });

@@ -20,6 +20,8 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
+    "jspdf": "^1.3.3",
+    "jspdf-autotable": "^2.3.2",
     "moment": "^2.18.1",
     "sweetalert": "^1.1.3",
     "vue": "^2.0.1",
