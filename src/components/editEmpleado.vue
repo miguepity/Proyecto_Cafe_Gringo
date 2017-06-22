@@ -72,10 +72,10 @@
                 </li>
               </router-link>
 
-              <router-link to="/admi">
-                <li>
-                  <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
-                </li>
+              <router-link to="/generarreporte">
+              <li>
+                <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
+              </li>
               </router-link>
 
               <router-link to="/crearempleado">

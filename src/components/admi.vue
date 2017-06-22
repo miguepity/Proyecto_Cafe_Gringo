@@ -69,7 +69,7 @@
               </li>
               </router-link>
 
-              <router-link to="/admi">
+              <router-link to="/generarreporte">
               <li>
                 <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
               </li>
