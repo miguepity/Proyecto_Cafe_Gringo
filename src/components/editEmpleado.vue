@@ -106,6 +106,8 @@
 </template>
 
 <script>
+
+import baseUrl from '../../config'
 import moment from 'moment'
 import sweetalert from 'sweetalert'
 
@@ -141,7 +143,7 @@ export default {
   },
   methods:{
     buscar: function(){
-      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.empleado.username).then((response)=>{
         if(response.body==""){
           sweetAlert({
             title: "Ohh No!...",
@@ -163,7 +165,8 @@ export default {
     },
 
     logout:function(){
-      this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
+      alert(this.date);
+      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
         this.$router.push("/");
       });
     },
@@ -237,7 +240,7 @@ export default {
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
