@@ -4,7 +4,7 @@
       <h3>Editar Empleado</h3>
       <div class="row username">
         <div class="col s12 m6 l6">
-          <input type="text" placeholder="Username para editar" v-model="empleado.username">
+          <input type="text" placeholder="Username para editar" v-model="username">
         </div>
         <div class="col s12 m6 l6">
           <button type="button" class="waves-effect waves-light btn" v-on:click="buscar">Buscar</button>
@@ -15,7 +15,7 @@
       </div>
       <div class="row respuesta">
         <div class="col s12 m6 l6">
-          <input type="password" v-model="empleado.pass">
+          <input type="password" v-model="pass">
         </div>
         <div class="col s12 m6 l6">
           <input type="password" v-model="conPass">
@@ -38,16 +38,17 @@
       </div>
       <div class="row respuesta">
         <div class="col s12 m5 l4">
-          <input class="datepicker" v-on:change="set">
+          <input class="datepicker">
+          <button class="btn" type="button" v-on:click="fecha">Buscar Fecha</button>
         </div>
         <div class="col s12 m5 l4">
-          <input type="text" v-model="empleado.hrIn">
+          <input type="text" v-model="hrIn">
         </div>
         <div class="col s12 m5 l4">
-          <input type="text" v-model="empleado.hrOut">
+          <input type="text" v-model="hrOut">
         </div>
       </div>
-      <button type="button" class="edit btn">Editar</button>
+      <button type="button" class="edit btn" v-on:click="editar">Editar</button>
 
 
       <div class="col  s3 m2 l3 colNav">
@@ -60,37 +61,37 @@
           <div class="menu-list">
             <ul class="menu-content">
               <router-link to="/admi">
-              <li>
-                <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-coffee" aria-hidden="true"></i>Cafe el Gringo</a>
+                </li>
               </router-link>
 
               <router-link to="/admi">
-              <li>
-                <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+                </li>
               </router-link>
 
               <router-link to="/admi">
-              <li>
-                <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
+                </li>
               </router-link>
 
               <router-link to="/crearempleado">
-              <li>
-                <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
+                </li>
               </router-link>
               <router-link to="/deletempleado">
-              <li>
-                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
+                </li>
               </router-link>
               <router-link to="/editempleado">
-              <li>
-                <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
+                </li>
               </router-link>
               <li>
                 <a v-on:click="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
@@ -105,12 +106,19 @@
 </template>
 
 <script>
+import moment from 'moment'
+import sweetalert from 'sweetalert'
+
 export default {
   data () {
     return {
       nombre:'',
+      username:'',
+      pass:'',
       conPass:'',
-      date: new Date(),
+      date:'',
+      hrIn: '',
+      hrOut:'',
       empleado:{
         Nombre:'',
         celular:'',
@@ -132,35 +140,99 @@ export default {
     }
   },
   methods:{
-    set:function(){
-
-    },
     buscar: function(){
-      this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((response)=>{
         if(response.body==""){
           sweetAlert({
-             title: "Ohh No!...",
-             text:  "Algo esta mal!...Usuario -"+this.empleado.username +"- no existe",
-             type:  "error",
-           });
-           this.empleado.username="";
+            title: "Ohh No!...",
+            text:  "Algo esta mal!...Usuario -"+this.username +"- no existe",
+            type:  "error",
+          });
+          this.username="";
         }else{
-          console.log(response.body);
           this.empleado.Nombre=response.body[0].Nombre;
-          // this.empleado.pass=String(SHA3(response.body[0].pass));
-          // this.conPass=String(SHA3(response.body[0].pass));
           this.empleado.email=response.body[0].email;
           this.empleado.celular=response.body[0].celular;
-
+          if(response.body[0].scope==="admin"){
+            $('#admin').attr('checked', 'checked');
+          }else{
+            $('#empleado').attr('checked', 'checked');
+          }
         }
       });
     },
 
     logout:function(){
-      alert(this.date);
       this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
         this.$router.push("/");
       });
+    },
+    fecha:function(){
+      this.date=$('.datepicker').val();
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((response)=>{
+        var date = response.body[0].date;
+        var hrin = response.body[0].hrIn;
+        var hrout = response.body[0].hrOut;
+        for (var i = 0; i < date.length; i++) {
+          for (var j = 0; j < hrin.length; j++) {
+            if ((moment(this.date).isSame(hrin[j], 'year') && moment(this.date).isSame(hrin[j], 'month') && moment(this.date).isSame(hrin[j], 'day'))){
+              this.hrIn=moment(hrin[j]).format("hh:mm a");
+            }
+          }
+          for (var k = 0; k < hrout.length; k++) {
+            if((moment(this.date).isSame(hrout[k], 'year') &&
+            moment(this.date).isSame(hrout[k], 'month') && moment(this.date).isSame(hrout[k], 'day'))){
+              this.hrOut=moment(hrout[k]).format("hh:mm a");
+            }
+          }
+        }
+        if(this.hrIn==="" && this.hrOut===""){
+          sweetAlert({
+            title: "Ohh No!...",
+            text:  "No hay registrada una fecha igual a la ingresada!!",
+            type:  "error",
+          });
+        }
+      });
+    },
+    editar:function(){
+      if(this.pass!=="" && this.conPass!==""){
+        if(this.pass===this.conPass){
+          alert("cambio pass")
+          if($('input[name=prop]:checked').val()==="empleado"){
+            this.empleado.scope= "empleado";
+          }else if($('input[name=prop]:checked').val()==="admin"){
+            this.empleado.scope= "admin";
+          }
+          var nuevo = {
+            Nombre:this.empleado.Nombre,
+            celular:this.empleado.celular,
+            email:this.empleado.email,
+            pass:this.pass,
+            scope:this.empleado.scope
+          }
+          console.log("Hola Mundo!");
+          this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username, nuevo).then((res)=>{
+          });
+        }else{
+          sweetAlert({
+            title: "Ohh No!...",
+            text:  "Algo esta mal!...La Contrseña no coincide!",
+            type:  "error",
+          });
+        }
+      }else{
+        alert("no cambio pass")
+        var nuevo = {
+          Nombre:this.empleado.Nombre,
+          celular:this.empleado.celular,
+          email:this.empleado.email,
+          genero:this.empleado.genero,
+          scope:this.empleado.scope
+        }
+        this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+        });
+      }
     }
   },
   beforeMount(){
@@ -171,11 +243,11 @@ export default {
     });
   },
   mounted(){
-      $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year
-      });
-    }
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year
+    });
+  }
 }
 </script>
 

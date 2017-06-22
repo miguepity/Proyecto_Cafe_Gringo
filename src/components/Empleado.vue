@@ -75,8 +75,6 @@ export default {
   },
   methods:{
     clickLogin: function(){
-      console.log("Entrando!");
-      console.log(moment().format());
       console.log(moment().format("hh:mm"));
       if (this.user.username == "" || this.user.pass == "") {
         sweetAlert({
