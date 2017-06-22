@@ -38,16 +38,17 @@
       </div>
       <div class="row respuesta">
         <div class="col s12 m5 l4">
-          <input class="datepicker" v-on:change="set">
+          <input class="datepicker">
+          <button class="btn" type="button" v-on:click="fecha">Buscar Fecha</button>
         </div>
         <div class="col s12 m5 l4">
-          <input type="text" v-model="empleado.hrIn">
+          <input type="text" v-model="hrIn">
         </div>
         <div class="col s12 m5 l4">
-          <input type="text" v-model="empleado.hrOut">
+          <input type="text" v-model="hrOut">
         </div>
       </div>
-      <button type="button" class="edit btn">Editar</button>
+      <button type="button" class="edit btn" v-on:click="editar">Editar</button>
 
 
       <div class="col  s3 m2 l3 colNav">
@@ -60,37 +61,37 @@
           <div class="menu-list">
             <ul class="menu-content">
               <router-link to="/admi">
-              <li>
-                <a><i class="fa fa-users" aria-hidden="true"></i>Cafe el Gringo</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-coffee" aria-hidden="true"></i>Cafe el Gringo</a>
+                </li>
               </router-link>
 
               <router-link to="/admi">
-              <li>
-                <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-table" aria-hidden="true"></i>Inventario</a>
+                </li>
               </router-link>
 
               <router-link to="/admi">
-              <li>
-                <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-file-excel-o" aria-hidden="true"></i>Reportes</a>
+                </li>
               </router-link>
 
               <router-link to="/crearempleado">
-              <li>
-                <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-plus-square-o" aria-hidden="true"></i>Crear Empleado</a>
+                </li>
               </router-link>
               <router-link to="/deletempleado">
-              <li>
-                <a><i class="fa fa-ban" aria-hidden="true"></i>Eliminar Empleado</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-users" aria-hidden="true"></i>Empleados</a>
+                </li>
               </router-link>
               <router-link to="/editempleado">
-              <li>
-                <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
-              </li>
+                <li>
+                  <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Empleado</a>
+                </li>
               </router-link>
               <li>
                 <a v-on:click="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
@@ -105,12 +106,17 @@
 </template>
 
 <script>
+import moment from 'moment'
+import sweetalert from 'sweetalert'
+
 export default {
   data () {
     return {
       nombre:'',
       conPass:'',
-      date: new Date(),
+      date:'',
+      hrIn: '',
+      hrOut:'',
       empleado:{
         Nombre:'',
         celular:'',
@@ -132,35 +138,58 @@ export default {
     }
   },
   methods:{
-    set:function(){
-
-    },
     buscar: function(){
       this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
         if(response.body==""){
           sweetAlert({
-             title: "Ohh No!...",
-             text:  "Algo esta mal!...Usuario -"+this.empleado.username +"- no existe",
-             type:  "error",
-           });
-           this.empleado.username="";
+            title: "Ohh No!...",
+            text:  "Algo esta mal!...Usuario -"+this.empleado.username +"- no existe",
+            type:  "error",
+          });
+          this.empleado.username="";
         }else{
-          console.log(response.body);
           this.empleado.Nombre=response.body[0].Nombre;
           // this.empleado.pass=String(SHA3(response.body[0].pass));
           // this.conPass=String(SHA3(response.body[0].pass));
           this.empleado.email=response.body[0].email;
           this.empleado.celular=response.body[0].celular;
-
+          if(response.body[0].scope==="admi"){
+            $('#admin').attr('checked', 'checked');
+          }else{
+            $('#empleado').attr('checked', 'checked');
+          }
         }
       });
     },
 
     logout:function(){
-      alert(this.date);
       this.$http.get("http://localhost:8000/cafe/logout").then((response)=>{
         this.$router.push("/");
       });
+    },
+    fecha:function(){
+      this.date=$('.datepicker').val();
+      this.$http.get("http://localhost:8000/cafe/empleado/"+this.empleado.username).then((response)=>{
+        var date = response.body[0].date;
+        var hrin = response.body[0].hrIn;
+        var hrout = response.body[0].hrOut;
+        for (var i = 0; i < date.length; i++) {
+          for (var j = 0; j < hrin.length; j++) {
+            if ((moment(this.date).isSame(hrin[j], 'year') && moment(this.date).isSame(hrin[j], 'month') && moment(this.date).isSame(hrin[j], 'day'))){
+              this.hrIn=moment(hrin[j]).format("hh:mm a");
+            }
+          }
+          for (var k = 0; k < hrout.length; k++) {
+            if((moment(this.date).isSame(hrout[k], 'year') &&
+            moment(this.date).isSame(hrout[k], 'month') && moment(this.date).isSame(hrout[k], 'day'))){
+              this.hrOut=moment(hrout[k]).format("hh:mm a");
+            }
+          }
+        }
+      });
+    },
+    editar:function(){
+
     }
   },
   beforeMount(){
@@ -171,11 +200,11 @@ export default {
     });
   },
   mounted(){
-      $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year
-      });
-    }
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year
+    });
+  }
 }
 </script>
 

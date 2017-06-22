@@ -8,6 +8,7 @@ import crearEmpleado from './components/crearEmpleado.vue'
 import Admi from './components/admi.vue'
 import deletEmpleado from './components/deletEmpleado.vue'
 import editEmpleado from './components/editEmpleado.vue'
+import verEmpleado from './components/verEmpleado.vue'
 import VueRouter from 'vue-router'
 import VueResouce from 'vue-resource'
 import moment from 'moment'
@@ -43,6 +44,11 @@ const router = new VueRouter({
      name: 'EditEmpleado',
      path: '/editempleado',
      component: editEmpleado
+   },
+   {
+     name: 'verEmpleado',
+     path: '/verempleado/:username',
+     component: verEmpleado
    },
   ]
 });
