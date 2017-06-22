@@ -70,7 +70,7 @@
               </li>
             </router-link>
             <li>
-              <a ><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+              <a ><i v-on:click="logout" class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
             </li>
           </ul>
         </div>
@@ -83,7 +83,6 @@
 <script>
 import moment from 'moment';
 import sweetAlert from 'sweetalert'
-
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import baseUrl from '../../config'
@@ -138,7 +137,7 @@ export default {
         });
       }
       var Empleado;
-      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((res)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.username).then((res)=>{
         Empleado = res.body;
         this.empleadoThis.date = Empleado[0].date;
         console.log("Empleado.date: "+Empleado[0].date);
@@ -217,6 +216,11 @@ export default {
       });
 
       console.log("inicio: "+this.fechaInicio +" fin: "+this.fechaFin);
+    },
+    logout:function(){
+      this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
+        this.$router.push("/");
+      });
     }
   },
   beforeMount(){
