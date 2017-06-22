@@ -211,7 +211,8 @@ export default {
             pass:this.pass,
             scope:this.empleado.scope
           }
-          this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+          console.log("Hola Mundo!");
+          this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username, nuevo).then((res)=>{
           });
         }else{
           sweetAlert({
