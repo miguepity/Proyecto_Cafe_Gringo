@@ -109,7 +109,7 @@
 
 import baseUrl from '../../config'
 import moment from 'moment'
-import sweetalert from 'sweetalert'
+import sweetAlert from 'sweetalert'
 
 export default {
   data () {
@@ -165,14 +165,13 @@ export default {
     },
 
     logout:function(){
-      alert(this.date);
       this.$http.get(`${baseUrl.uri}/cafe/logout`).then((response)=>{
         this.$router.push("/");
       });
     },
     fecha:function(){
       this.date=$('.datepicker').val();
-      this.$http.get("http://localhost:8000/cafe/empleado/"+this.username).then((response)=>{
+      this.$http.get(`${baseUrl.uri}/cafe/empleado/`+this.username).then((response)=>{
         var date = response.body[0].date;
         var hrin = response.body[0].hrIn;
         var hrout = response.body[0].hrOut;
@@ -215,7 +214,7 @@ export default {
             scope:this.empleado.scope
           }
           console.log("Hola Mundo!");
-          this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username, nuevo).then((res)=>{
+          this.$http.put(`${baseUrl.uri}/cafe/updatempleado/`+this.username, nuevo).then((res)=>{
           });
         }else{
           sweetAlert({
@@ -225,7 +224,6 @@ export default {
           });
         }
       }else{
-        alert("no cambio pass")
         var nuevo = {
           Nombre:this.empleado.Nombre,
           celular:this.empleado.celular,
@@ -233,7 +231,7 @@ export default {
           genero:this.empleado.genero,
           scope:this.empleado.scope
         }
-        this.$http.put("http://localhost:8000/cafe/updatempleado/"+this.username,nuevo).then((res)=>{
+        this.$http.put(`${baseUrl.uri}/cafe/updatempleado/`+this.username,nuevo).then((res)=>{
         });
       }
     }

@@ -54,7 +54,7 @@
 <script>
 
 import moment from 'moment'
-import sweetalert from 'sweetalert'
+import sweetAlert from 'sweetalert'
 import baseUrl from '../../config'
 
 export default {
@@ -141,7 +141,7 @@ export default {
 
         this.userLogin.date = moment().format("DD-MM-YYYY");
         var fecha = moment().format();
-        
+
         var locals = localStorage.getItem("username");
 
         this.$http.get(`${baseUrl.uri}/cafe/gethoras?username=`+locals+`&date=`+fecha).then((res)=>{

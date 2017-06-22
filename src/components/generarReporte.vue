@@ -82,6 +82,8 @@
 
 <script>
 import moment from 'moment';
+import sweetAlert from 'sweetalert'
+import baseUrl from '../../config'
 export default {
   data(){
     return{
@@ -101,7 +103,7 @@ export default {
   },
   beforeMount(){
     var username = localStorage.getItem("username");
-    this.$http.get("http://localhost:8000/cafe/empleado/"+username).then((res)=>{
+    this.$http.get(`${baseUrl.uri}/cafe/empleado/`+username).then((res)=>{
       var empleado = res.body;
       this.nombre = empleado[0].Nombre;
     });
